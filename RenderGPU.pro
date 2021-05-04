@@ -21,7 +21,17 @@ SOURCES += \
     Geometry/Scene.cpp \
     Geometry/TG.cpp \
     Geometry/TranslateTG.cpp \
+    Geometry/ScaleTG.cpp \
+    DataService/ConfigMappingReader.cpp \
+    DataService/RealDataReader.cpp \
+    Geometry/FittedPlane.cpp \
+    DataService/VirtualWorldReader.cpp \
     GeometryBuilders/Builder.cpp \
+    GeometryBuilders/ObjectFactory.cpp \
+    GeometryBuilders/Mapping.cpp \
+    GeometryBuilders/SceneFactory.cpp \
+    GeometryBuilders/SceneFactoryData.cpp \
+    GeometryBuilders/SceneFactoryVirtual.cpp \
     Main.cpp \
     Renders/Camera.cpp \
     Renders/GLWidget.cpp \
@@ -33,10 +43,20 @@ HEADERS += \
     Geometry/Cara.h \
     Geometry/ColorMap.h \
     Geometry/ColorMapStatic.h \
+    DataService/ConfigMappingReader.h \
+    DataService/RealDataReader.h \
+    DataService/VirtualWorldReader.h \
     Geometry/Light.h \
     Geometry/Material.h \
     Geometry/Object.h \
     Geometry/Scene.h \
+    Geometry/FittedPlane.h \
+    GeometryBuilders/Mapping.h \
+    GeometryBuilders/ObjectFactory.h \
+    GeometryBuilders/SceneFactory.h \
+    GeometryBuilders/SceneFactoryData.h \
+    GeometryBuilders/SceneFactoryVirtual.h \
+    Geometry/ScaleTG.h \
     Geometry/TG.h \
     Geometry/TranslateTG.h \
     GeometryBuilders/Builder.h \

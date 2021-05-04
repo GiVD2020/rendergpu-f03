@@ -3,6 +3,12 @@
 
 #include <QtWidgets>
 #include <Renders/GLWidget.h>
+#include <DataService/VirtualWorldReader.h>
+#include <DataService/RealDataReader.h>
+#include <GeometryBuilders/SceneFactory.h>
+#include <GeometryBuilders/SceneFactoryData.h>
+#include <GeometryBuilders/SceneFactoryVirtual.h>
+
 
 class Builder : public QObject {
         Q_OBJECT
@@ -12,6 +18,7 @@ class Builder : public QObject {
 
 public:
     Builder(GLWidget *glWid);
+    shared_ptr<SceneFactory> getFactory(shared_ptr<ConfigMappingReader> cf, Scene::DATA_TYPES expected);
 
 public slots:
     void newObjFromFile();

@@ -2,5 +2,11 @@
     <qresource prefix="/">
         <file>resources/fshader1.glsl</file>
         <file>resources/vshader1.glsl</file>
+        <file>resources/models/sphere0.obj</file>
+        <file>resources/models/sphere1.obj</file>
+        <file>resources/models/capsule.obj</file>
+        <file>resources/models/cruiser.obj</file>
+        <file>resources/config_files/configMapping.txt</file>
+        <file>resources/config_files/configMappingData.txt</file>
     </qresource>
 </RCC>

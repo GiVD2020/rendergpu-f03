@@ -1,7 +1,8 @@
 #pragma once
 
 #include <vector>
-#include <library/vec.h>
+#include "library/Common.h"
+
 #include <cmath>
 
 using namespace std;

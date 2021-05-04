@@ -35,9 +35,11 @@ void Scene::addObject(shared_ptr<Object> obj) {
  * @brief Scene::toGPU
  */
 void Scene::toGPU(shared_ptr<QGLShaderProgram> p) {
-    for(unsigned int i=0; i < objects.size(); i++){
+
+    for(int i=0; i < objects.size(); i++){
         objects.at(i)->toGPU(p);
     }
+
 }
 
 /**
@@ -98,6 +100,18 @@ void Scene::addLight(shared_ptr<Light> l) {
 void Scene::setAmbientToGPU(shared_ptr<QGLShaderProgram> program){
     // TO DO: A implementar a la fase 1 de la practica 2
 
+}
+
+
+void Scene::setGround(shared_ptr<FittedPlane> g){
+    theres_ground = true;
+    this->ground = g;
+
+}
+
+
+void Scene::unSetGround(){
+    theres_ground = false;
 }
 
 /**

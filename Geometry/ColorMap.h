@@ -1,6 +1,8 @@
 #pragma once
 
 #include <library/vec.h>
+#include "library/Common.h"
+
 using namespace Common;
 
 class ColorMap

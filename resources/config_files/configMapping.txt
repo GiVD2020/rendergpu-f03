@@ -1,0 +1,5 @@
+dataType,VIRTUALWORLD
+limitsMonReal, -1, 1, -1, 1, -1, 1
+limitsMonVirtual, -1, 1, -1, 1, -1, 1
+base,plane, 0.0, 1.0, 0.0, -0.5,://resources/europa.png
+prop, 1, 0, 300000,cilindre,COLOR_MAP_TYPE_INFERNO

@@ -274,5 +274,21 @@ Capsa3D Object::calculCapsa3D()
 }
 
 void Object::aplicaTG(shared_ptr<TG> tg){
+    //POSSIBLEMENT S'HAURIA DE FER A LA GPU
+    /*for(point4 vertex: vertexs){
+        vec4 nou_vertex = vec4(mvmult(tg->getTG(),vertex));
+        vertex.x = nou_vertex.x;
+        vertex.y = nou_vertex.y;
+        vertex.z = nou_vertex.z;
+
+    }*/
+
+    for(int i= 0; i<vertexs.size(); i++){
+        point4 nou_vertex = tg->getTG()*vertexs[i];
+        vertexs[i] = nou_vertex;
+    }
+    make();
 
 }
+
+
