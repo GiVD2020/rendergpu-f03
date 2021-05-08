@@ -16,7 +16,7 @@ Segona pràctica de GiVD 2020-21
         - [x] Objectes  |  (Mario)
         - [x] Escenes virtuals  |  (Mario)
         - [x] Escenes de dades Reals | (Mario)
-    - Material
+    - Material [x] (Joan)
     - Light
         - [ ] Puntual
         - [ ] Direccional
@@ -62,6 +62,24 @@ Podem trobar un exemple de 1. a `basic_spheres.txt` i de 2. a  basic_spheres_tra
 
 Pel que fa a dades reals, el funcionament segueix el de la practica 1 en els fitxers de configuració. Es pot trobar algun exemple a `basic_data_test.txt`. A les screenshots es poden veure dos exemples amb dades reals.
 
+##
+#### 2) Material
+
+En aquesta segona secció sen’s demana implementar la classe `Material` per a poder fer  el pas de les seves diverses components 
+a la GPU. Per a fer això les modificacions que hem fet ha sigut afegir a la classe `Object` un atribut material, el qual es crearà junt amb els altres atributs d’objecte.
+
+En el inici del  mètode draw de `Object` hem afegit la crida al mètode toGPU que passarà els seus valors a la GPU.
+Aquesta comunicació la fem amb structs tant a la CPU com a la GPU.
+
+Finalment, en el fitxer de vertexshader, agafem els valors de CPU. Per a fer això tenim un uniform de tipus struct amb les diverses components. 
+Per comprobar que aquestes dades han sigut agafades correctament hem diverses execucions on cada cop el color serà igual a una component del material diferent.
+La component shineness és la única que no és un vector, per tant per a setejar que el color sigui igual a ella hem creat un vec4 que cada component és igual al valor de shineness.
+
+Els valors de cada component han sigut setejats en el constructor de la classe Material.
+
+
+
+
 ## Screenshots
 #### 1) Adaptació a la lectura de fitxers de dades
 `virtual_data.txt` i `configMapping.txt`
@@ -73,6 +91,35 @@ Pel que fa a dades reals, el funcionament segueix el de la practica 1 en els fit
 
 `basic_data_test.txt` amb les esferes juntes al pla y=0
 ![Drag Racing](./resources/screenshots/realdata2.png)
+
+#### 2) Material
+
+Els valors de les diverses components han sigut setejades per a què s’ens mostrin les circumferències de color: vermell, verde, blau i blanc segons la component que usem.
+En totes les execucions els valors són els mateixos però mostrem una component diferent. Per a deixar clar a quina correspon escribim junt a la imatge la component que és i quin valor té.
+
+Component ambient = (1.0,0.0,0.0)
+
+![Drag Racing](./resources/screenshots/ambient.png)
+
+
+Component difusa = (0.0,1.0,0.0)
+
+![Drag Racing](./resources/screenshots/difusa.png)
+
+
+Component especular = (0.0,0.0,1.0)
+
+![Drag Racing](./resources/screenshots/especular.png)
+
+
+Shineness = 1.0
+
+![Drag Racing](./resources/screenshots/shineness.png)
+
+
+
+
+
 
 *(NOTA: Per a cada pas de l'enunciat (del 1 al 6), incloure captures de pantalla de les proves que heu fet per a demostrar la funcionalitat de la vostra pràctica amb explicacions de la seva configuració i com les heu aconseguides)*
 
