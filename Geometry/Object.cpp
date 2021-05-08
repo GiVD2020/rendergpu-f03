@@ -11,6 +11,8 @@ Object::Object(int npoints, QObject *parent) : QObject(parent){
     points = new point4[numPoints];
     normals= new point4[numPoints];
     colors = new point4[numPoints];
+    material = new Material();
+
  }
 
 /**
@@ -22,6 +24,8 @@ Object::Object(int npoints, QString n) : numPoints(npoints){
     points = new point4[numPoints];
     normals= new point4[numPoints];
     colors = new point4[numPoints];
+    material = new Material();
+
 
     parseObjFile(n);
     make();
@@ -35,6 +39,7 @@ Object::~Object(){
     delete points;
     delete normals;
     delete colors;
+    delete material;
 }
 
 /**
@@ -42,6 +47,7 @@ Object::~Object(){
  * @param pr
  */
 void Object::toGPU(shared_ptr<QGLShaderProgram> pr) {
+
     // TO  DO: A modificar a la fase 1 de la practica 2
 
     qDebug() << "Obj to GPU.....";
@@ -81,6 +87,9 @@ void Object::toGPU(shared_ptr<QGLShaderProgram> pr) {
  */
 void Object::draw(){
 
+
+    //material to gpu
+    material->toGPU(program);
     // Aqui s'ha de fer el pas de dades a la GPU per si hi ha més d'un objecte
     // Activació a GL del Vertex Buffer Object
 

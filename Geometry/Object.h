@@ -20,6 +20,8 @@ using namespace Common;
 #include <Geometry/TG.h>
 #include <Geometry/Animation.h>
 #include <Geometry/Cara.h>
+#include <Geometry/Material.h>
+
 
 typedef vec4  point4;
 
@@ -50,6 +52,9 @@ protected:
     shared_ptr<QGLShaderProgram> program;
 
     shared_ptr<QOpenGLTexture> texture;
+
+    //Atribut material, com que és protected no fa falta setter i getter(almenys de moment)
+    Material *material;
 
 public:
 
