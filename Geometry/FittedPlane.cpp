@@ -44,13 +44,7 @@ void FittedPlane::make()
     // generacio de la geometria dels triangles per a visualitzar-lo
     Index = 0;
     quad( 1, 0, 2, 3 );
-
-
 }
-
-
-
-
 
 
 

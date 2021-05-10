@@ -12,6 +12,7 @@ void Builder::newObjFromFile()
     QString fileName = QFileDialog::getOpenFileName();
     if (!fileName.isNull()) {
             //canviar quan es vulguin carregar objectes mes pesats
+            //EN ALGUNS OBJECTES S'HAN D'INCREMENTAR(BUNNY I HALO)
             auto obj = make_shared<Object>(300000, fileName);
             scene->addObject(obj);
             scene->camera->actualitzaCamera(scene->capsaMinima);

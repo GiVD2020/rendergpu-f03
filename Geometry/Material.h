@@ -1,7 +1,6 @@
 #pragma once
-
-#include <QGLShaderProgram>
 #include "library/Common.h"
+#include <QGLShaderProgram>
 #include <memory>
 
 using namespace std;

@@ -8,10 +8,12 @@
  */
 Object::Object(int npoints, QObject *parent) : QObject(parent){
     numPoints = npoints;
-    points = new point4[numPoints];
-    normals= new point4[numPoints];
-    colors = new point4[numPoints];
+    points = new point4 [numPoints];
+    normals = new point4 [numPoints];
+    colors = new point4 [numPoints];
+    textureVertexCoords = new vec2 [numPoints];
     material = new Material();
+    texture = nullptr;
 
  }
 
@@ -21,11 +23,12 @@ Object::Object(int npoints, QObject *parent) : QObject(parent){
  * @param n
  */
 Object::Object(int npoints, QString n) : numPoints(npoints){
-    points = new point4[numPoints];
-    normals= new point4[numPoints];
-    colors = new point4[numPoints];
+    points = new point4 [numPoints];
+    normals= new point4 [numPoints];
+    colors = new point4 [numPoints];
+    textureVertexCoords = new vec2 [numPoints];
     material = new Material();
-
+    texture = nullptr;
 
     parseObjFile(n);
     make();
@@ -40,6 +43,10 @@ Object::~Object(){
     delete normals;
     delete colors;
     delete material;
+    delete textureVertexCoords;
+    //Borrem tots els elements del vector
+    textVertexs.clear();
+    //QGLContext::makeCurrent();
 }
 
 /**
@@ -53,8 +60,11 @@ void Object::toGPU(shared_ptr<QGLShaderProgram> pr) {
     qDebug() << "Obj to GPU.....";
 
     program = pr;
-    // Creació d'un vertex array object
 
+    //Activo textura i passo a la GPU
+    texture->bind(0);
+    program->setUniformValue("texMap",0);
+    // Creació d'un vertex array object
     glGenVertexArrays( 1, &vao );
 
     // Creacio i inicialitzacio d'un vertex buffer object (VBO)
@@ -67,9 +77,14 @@ void Object::toGPU(shared_ptr<QGLShaderProgram> pr) {
     // TO  DO: A modificar a la fase 1 de la practica 2
     // Cal passar les normals a la GPU
 
-    glBufferData( GL_ARRAY_BUFFER, sizeof(point4)*Index + sizeof(point4)*Index, NULL, GL_STATIC_DRAW );
+    glBufferData( GL_ARRAY_BUFFER, sizeof(point4)*Index + sizeof(point4)*Index + sizeof(vec2)*Index, NULL, GL_STATIC_DRAW );
     glBufferSubData( GL_ARRAY_BUFFER, 0, sizeof(point4)*Index, points );
+    //aquí anirà les normals
     glBufferSubData( GL_ARRAY_BUFFER, sizeof(point4)*Index, sizeof(point4)*Index, colors );
+    //buffer textura
+    glBufferSubData( GL_ARRAY_BUFFER, sizeof(point4)*Index + sizeof(point4)*Index, sizeof(vec2)*Index, textureVertexCoords);
+    //glBufferSubData( GL_ARRAY_BUFFER, sizeof(points)+sizeof(colors), sizeof(vertexsTextura), vertexsTextura );
+
 
     // set up vertex arrays
     glBindVertexArray( vao );
@@ -78,6 +93,13 @@ void Object::toGPU(shared_ptr<QGLShaderProgram> pr) {
 
     glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 0,  (void*)(sizeof(point4)*Index));
     glEnableVertexAttribArray(1);
+
+    //texture
+    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 0,  (void*)((sizeof(point4)*Index) + sizeof (point4)*Index));
+
+    glEnableVertexAttribArray(2);
+    //passem la textura a GPU
+    toGPUTexture(pr);
 }
 
 
@@ -85,9 +107,11 @@ void Object::toGPU(shared_ptr<QGLShaderProgram> pr) {
  * Pintat en la GPU.
  * @brief Object::draw
  */
+//MIRAR SI ESTÀ BÉ PER LA TEXTURA
 void Object::draw(){
 
-
+    //dibuixem la textura
+    drawTexture();
     //material to gpu
     material->toGPU(program);
     // Aqui s'ha de fer el pas de dades a la GPU per si hi ha més d'un objecte
@@ -96,12 +120,17 @@ void Object::draw(){
     glBindVertexArray( vao );
     glEnableVertexAttribArray(0);
     glEnableVertexAttribArray(1);
+    //textura
+    glEnableVertexAttribArray(2);
+
 
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
     glDrawArrays( GL_TRIANGLES, 0, Index );
 
     glDisableVertexAttribArray(0);
     glDisableVertexAttribArray(1);
+    //textures
+    glDisableVertexAttribArray(2);
 
 }
 
@@ -125,9 +154,13 @@ void Object::make(){
         for(unsigned int j=0; j<cares[i].idxVertices.size(); j++){
             points[Index] = vertexs[cares[i].idxVertices[j]];
             colors[Index] = vec4(base_colors[j%4], 1.0);
+            if (!textVertexs.empty()){
+                textureVertexCoords[Index] = textVertexs[cares[i].idxTextures[j]];
+            }
             Index++;
         }
     }
+    initTexture();
 }
 
 
@@ -140,8 +173,14 @@ void Object::make(){
 void Object::toGPUTexture(shared_ptr<QGLShaderProgram> pr) {
     program = pr;
 
-// TO DO: Cal implementar en la fase 1 de la practica 2
-// S'ha d'activar la textura i es passa a la GPU
+    // TO DO: Cal implementar en la fase 1 de la practica 2
+    // S'ha d'activar la textura i es passa a la GPU
+    qDebug() << "toGPUTexture...";
+    //CODI DE CUB.CPP
+    //texture->bind(0);
+    glEnable (GL_DEPTH_TEST );
+    glEnable( GL_TEXTURE_2D );
+
 
 }
 
@@ -154,6 +193,12 @@ void Object::drawTexture(){
 
     // TO DO: Cal implementar en la fase 1 de la practica 2
     // S'ha d'activar la textura i es passa a la GPU
+    //texture->bind(0);
+    if(texture != nullptr){
+        texture->bind(0);
+        //Sets the uniform variable at location in the current context to value.
+        program->setUniformValue("texMap",0);
+    }
 
 }
 
@@ -169,6 +214,22 @@ void Object::initTexture()
     // TO DO: A implementar a la fase 1 de la practica 2
     // Cal inicialitzar la textura de l'objecte: veure l'exemple del CubGPUTextura
     qDebug() << "Initializing textures...";
+
+    // Carregar la textura
+    glActiveTexture(GL_TEXTURE0);
+    //passar el path de la textura que volem usar
+    //NO SERVEIX AQUEST PATH JA QUE HE DE ANAR PRIMER A LA CARPETA PARE I DESPERES A RESOURCES
+    //QOpenGLTexture *textura = new QOpenGLTexture(QImage("://resources/textures/earth3.png"));
+    //Codi necessari per passar de punter a shared_ptr
+    //shared_ptr<QOpenGLTexture> punter_Texture(textura);
+    //texture =  punter_Texture;
+    //NO SERVEIX AQUEST PATH JA QUE HE DE ANAR PRIMER A LA CARPETA PARE I DESPERES A RESOURCES
+    texture = make_shared<QOpenGLTexture>(QImage("/Users/Jramiro/Desktop/GrafsP2/rendergpu-f03/resources/textures/2k_earth_daymap.jpg"));
+    texture->setWrapMode(QOpenGLTexture::Repeat);
+    //per tema dels pixels per si ocupen mes o menys
+    texture->setMinificationFilter(QOpenGLTexture::LinearMipMapLinear);
+    texture->setMagnificationFilter(QOpenGLTexture::Linear);
+    texture->bind(0);
 
  }
 

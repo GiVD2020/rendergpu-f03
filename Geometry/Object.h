@@ -34,6 +34,7 @@ protected:
     vector<Cara> cares;
     vector<point4> vertexs;
     vector<point4> normalsVertexs;
+    //Vector pels vèrtexs de textura
     vector<vec2>   textVertexs;
 
     // Estructures per passar a la GPU
@@ -51,10 +52,17 @@ protected:
 
     shared_ptr<QGLShaderProgram> program;
 
+    //Atribut textura
     shared_ptr<QOpenGLTexture> texture;
+    //QOpenGLTexture *texture;
 
+    //vec2 de les coordenades de textura
+    vec2 *textureVertexCoords;
     //Atribut material, com que és protected no fa falta setter i getter(almenys de moment)
     Material *material;
+
+
+
 
 public:
 

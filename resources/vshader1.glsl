@@ -2,6 +2,7 @@
 
 layout (location = 0) in vec4 vPosition;
 layout (location = 1) in vec4 vColor;
+layout (location = 2) in vec2 vCoordTexture;
 
 
 //struct del material
@@ -18,6 +19,7 @@ uniform mat4 model_view;
 uniform mat4 projection;
 
 out vec4 color;
+out vec2 v_texcoord;
 
 void main()
 {
@@ -31,4 +33,10 @@ void main()
     //color = vec4(material.diffuse,1.0);
     //color = vec4(material.especular,1.0);
     //color = vec4(material.shineness,material.shineness,material.shineness,1.0);
+
+    //SECCIÓ 4 FASE 1: TEXTURES:
+    // Pas de les coordenades de textura al fragment shader
+    // El valor del color i les coordenades de textura s'interpolaran automaticament
+    // en els fragments interiors a les cares dels polígons
+    v_texcoord = vCoordTexture;
 }
