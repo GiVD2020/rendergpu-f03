@@ -4,6 +4,30 @@ layout (location = 0) in vec4 vPosition;
 layout (location = 1) in vec4 vColor;
 layout (location = 2) in vec2 vCoordTexture;
 
+//struct de las luces
+struct lights_g
+{
+    vec4 position_g;
+    vec3 iA_g;
+    vec3 iD_g;
+    vec3 iS_g;
+    vec3 coeficients_g;
+    int type_g;
+    vec4 direction_g;
+    float angle_g;
+};
+
+//uniform de la luz
+uniform lights_g lights[3];
+
+//struct de la luz ambiente
+struct lightAmbient
+{
+    vec3 lightAmbientGlobal;
+};
+
+//struct de la luz ambiente
+uniform lightAmbient lightAmbientGlobal;
 
 //struct del material
 struct Material{
@@ -29,7 +53,8 @@ void main()
     //SECCIÓ 2 FASE 1: MATERIAL:
     //Fem test amb cada una de les components del material per veure que rebem correctament totes elles.
     //TESTEJAT I FUNCIONA AMB CADA UNA D'ELLES
-    color = vec4(material.ambient,1.0);
+    color = vec4(lights[0].iA_g,1.0);//
+    //color = vec4(material.ambient,1.0);
     //color = vec4(material.diffuse,1.0);
     //color = vec4(material.especular,1.0);
     //color = vec4(material.shineness,material.shineness,material.shineness,1.0);

@@ -85,9 +85,11 @@ void Scene::setLightActual(shared_ptr<Light> l){
  * @param program
  */
 void Scene::lightsToGPU(shared_ptr<QGLShaderProgram> program){
-// TO DO: A implementar a la fase 1 de la practica 2
-
-}
+    // TO DO: A implementar a la fase 1 de la practica 2
+        for(int i=0; i < lights.size(); i++){
+            lights.at(i)->LightsToGPU(program.get(), i);
+        }
+    }
 
 void Scene::addLight(shared_ptr<Light> l) {
     lights.push_back(l);
@@ -99,7 +101,9 @@ void Scene::addLight(shared_ptr<Light> l) {
  */
 void Scene::setAmbientToGPU(shared_ptr<QGLShaderProgram> program){
     // TO DO: A implementar a la fase 1 de la practica 2
-
+    vec3 lightAmbient;
+    lightAmbient = program->uniformLocation(QString("lightAmbientGlobal[%1]. lightAmbientGlobal"));
+    //glUniform3fv(lightAmbientGlobal,1,lightAmbientGlobal);
 }
 
 

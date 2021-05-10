@@ -44,6 +44,7 @@ void GLWidget::initializeGL() {
     // Creacio d'una Light per apoder modificar el seus valors amb la interficie
     auto l  = make_shared<Light>(Puntual);
     scene->addLight(l);
+    scene->lightsToGPU(program);
 
     scene->camera->init(this->size().width(), this->size().height(), scene->capsaMinima);
     emit ObsCameraChanged(scene->camera);

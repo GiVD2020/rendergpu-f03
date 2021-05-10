@@ -9,7 +9,6 @@
 #include <string>
 #include <stdio.h>
 
-#include <library/vec.h>
 #include <library/Common.h>
 
 #include <Geometry/FittedPlane.h>
