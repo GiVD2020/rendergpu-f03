@@ -17,7 +17,7 @@ GLWidget::GLWidget(const QGLFormat &glf, QWidget *parent) : QGLWidget(glf, paren
 }
 
 GLWidget::~GLWidget() {
-    //makeCurrent();
+    makeCurrent();
 }
 
 
