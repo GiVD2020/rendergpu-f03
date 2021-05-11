@@ -6,6 +6,9 @@
         <file>resources/models/sphere1.obj</file>
         <file>resources/models/capsule.obj</file>
         <file>resources/models/cruiser.obj</file>
+        <file>resources/textures/bricks.png</file>
+        <file>resources/textures/2k_venus_surface.jpg</file>
+        <file>resources/textures/2k_earth_daymap.jpg</file>
         <file>resources/config_files/configMapping.txt</file>
         <file>resources/config_files/configMappingData.txt</file>
     </qresource>

@@ -8,7 +8,7 @@ uniform sampler2D texMap;
 
 void main()
 {
-    colorOut = color;
-    //colorOut = vec4(texture(texMap, v_texcoord).rgb, 1.0f);
+    //colorOut = color;
+    colorOut = vec4(texture(texMap, v_texcoord).rgb, 1.0f);
 }
 

@@ -218,13 +218,11 @@ void Object::initTexture()
     // Carregar la textura
     glActiveTexture(GL_TEXTURE0);
     //passar el path de la textura que volem usar
-    //NO SERVEIX AQUEST PATH JA QUE HE DE ANAR PRIMER A LA CARPETA PARE I DESPERES A RESOURCES
     //QOpenGLTexture *textura = new QOpenGLTexture(QImage("://resources/textures/earth3.png"));
     //Codi necessari per passar de punter a shared_ptr
     //shared_ptr<QOpenGLTexture> punter_Texture(textura);
     //texture =  punter_Texture;
-    //NO SERVEIX AQUEST PATH JA QUE HE DE ANAR PRIMER A LA CARPETA PARE I DESPERES A RESOURCES
-    texture = make_shared<QOpenGLTexture>(QImage("/Users/Jramiro/Desktop/GrafsP2/rendergpu-f03/resources/textures/2k_earth_daymap.jpg"));
+    texture = make_shared<QOpenGLTexture>(QImage("://resources/textures/2k_venus_surface.jpg"));
     texture->setWrapMode(QOpenGLTexture::Repeat);
     //per tema dels pixels per si ocupen mes o menys
     texture->setMinificationFilter(QOpenGLTexture::LinearMipMapLinear);
