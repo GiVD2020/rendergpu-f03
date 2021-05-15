@@ -153,6 +153,7 @@ void Object::make(){
     for(unsigned int i=0; i<cares.size(); i++){
         for(unsigned int j=0; j<cares[i].idxVertices.size(); j++){
             points[Index] = vertexs[cares[i].idxVertices[j]];
+            normals[Index] = normalsVertexs[cares[i].idxNormals[j]];
             colors[Index] = vec4(base_colors[j%4], 1.0);
             if (!textVertexs.empty()){
                 textureVertexCoords[Index] = textVertexs[cares[i].idxTextures[j]];
