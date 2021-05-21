@@ -16,7 +16,7 @@ Segona pràctica de GiVD 2020-21
         - [x] Objectes  |  (Mario)
         - [x] Escenes virtuals  |  (Mario)
         - [x] Escenes de dades Reals | (Mario)
-    - Material [x] (Joan)
+    -  [x] Material | (Joan)
     - Light
         - [ ] Puntual
         - [ ] Direccional
