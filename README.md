@@ -23,15 +23,15 @@ Segona pràctica de GiVD 2020-21
         - [ ] Spotlight
         - [ ] Ambient Global
     - Shading
-        - [ ] Phong
-        - [ ] Gouraud
+        - [x] Phong  |  (Estíbaliz)
+        - [x] Gouraud  |  (Estíbaliz)
     - Textures
         - [ ] Textura com material en un objecte
         - [ ] Textura al pla base
 
 
 - Fase 2 (OPT)
-    - [ ] Toon-shading i èmfasi de siluetes
+    - [x] Toon-shading i èmfasi de siluetes  |  (Estíbaliz)
     - [ ] Mapping indirecte de textures
     - [ ] Animacions amb dades temporals
     - [ ] Normal mapping
