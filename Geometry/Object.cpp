@@ -29,7 +29,27 @@ Object::Object(int npoints, QString n) : numPoints(npoints){
     textureVertexCoords = new vec2 [numPoints];
     material = new Material();
     texture = nullptr;
+    parseObjFile(n);
+    make();
+}
 
+Object::Object(const int npoints, QString n, vec3 difuse): numPoints(npoints){
+    points = new point4 [numPoints];
+    normals= new point4 [numPoints];
+    colors = new point4 [numPoints];
+    textureVertexCoords = new vec2 [numPoints];
+    material = new Material(difuse);
+    texture = nullptr;
+    parseObjFile(n);
+    make();
+}
+Object::Object(const int npoints, QString n, vec3 difuse, vec3 especular, vec3 ambient, float shineness): numPoints(npoints){
+    points = new point4 [numPoints];
+    normals= new point4 [numPoints];
+    colors = new point4 [numPoints];
+    textureVertexCoords = new vec2 [numPoints];
+    material = new Material(difuse);
+    texture = nullptr;
     parseObjFile(n);
     make();
 }
@@ -222,7 +242,7 @@ void Object::initTexture()
     //Codi necessari per passar de punter a shared_ptr
     //shared_ptr<QOpenGLTexture> punter_Texture(textura);
     //texture =  punter_Texture;
-    texture = make_shared<QOpenGLTexture>(QImage("://resources/textures/2k_venus_surface.jpg"));
+    texture = make_shared<QOpenGLTexture>(QImage("://resources/textures/2k_earth_daymap.jpg"));
     texture->setWrapMode(QOpenGLTexture::Repeat);
     //per tema dels pixels per si ocupen mes o menys
     texture->setMinificationFilter(QOpenGLTexture::LinearMipMapLinear);

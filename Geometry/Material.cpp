@@ -1,13 +1,15 @@
 #include "Geometry/Material.h"
 
 Material::Material(){
-    ambient = vec3(1.0,0.0,0.0);
+    //hardcodejat per quan les dades virtual/reals no vinguin amb un material especificat
+    ambient = vec3(0.0,1.0,0.0);
     diffuse= vec3(0.0,1.0,0.0);
     especular = vec3(0.0,0.0,1.0);
     shineness = 1.0;
 }
 
 Material::Material(vec3 d){
+    //quan nomes ens vingui el color difus
     ambient = vec3(1.0,0.0,0.0);
     diffuse = d;
     especular = vec3(0.0,0.0,1.0);
@@ -15,6 +17,7 @@ Material::Material(vec3 d){
 }
 
 Material::Material(vec3 d, vec3 s, vec3 a, float beta){
+    //quan ens vinguin totes les dades
     ambient = a;
     diffuse = d;
     especular = s;

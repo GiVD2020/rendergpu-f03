@@ -47,6 +47,37 @@ shared_ptr<Object> ObjectFactory::createObject(QString filename ,vec3 v, OBJECT_
     return o;
 }
 
+shared_ptr<Object> ObjectFactory::createObject(QString filename ,vec3 v,vec3 difuse, OBJECT_TYPES t){
+    shared_ptr<Object> o;
+    switch (t) {
+        case BR_OBJECT:{
+            o = make_shared<Object>(300000,filename, difuse);
+            shared_ptr<TranslateTG> tTG = make_shared<TranslateTG>(v);
+            o->aplicaTG(tTG);
+            break;
+        }
+        default:
+            break;
+    }
+    return o;
+}
+
+shared_ptr<Object> ObjectFactory::createObject(QString filename ,vec3 v,vec3 difuse, vec3 especular, vec3 ambient,float shineness, OBJECT_TYPES t){
+    shared_ptr<Object> o;
+    switch (t) {
+        case BR_OBJECT:{
+            o = make_shared<Object>(300000,filename);
+            shared_ptr<TranslateTG> tTG = make_shared<TranslateTG>(v);
+            o = make_shared<Object>(300000,filename, difuse, especular, ambient, shineness);
+            o->aplicaTG(tTG);
+            break;
+        }
+        default:
+            break;
+    }
+    return o;
+}
+
 
 /*shared_ptr<Object> ObjectFactory::createObject(vec3 v, double aux, float data,float xmin, float xmax, float zmin,float zmax, OBJECT_TYPES t){
     shared_ptr<Object> o;

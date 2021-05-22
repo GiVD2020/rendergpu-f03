@@ -68,6 +68,8 @@ public:
 
     Object(const int npoints, QObject *parent = 0);
     Object(const int npoints, QString n);
+    Object(const int npoints, QString n, vec3 difuse);
+    Object(const int npoints, QString n, vec3 difuse, vec3 especular, vec3 ambient, float shineness);
     ~Object();
 
     void parseObjFile(const QString &fileName);

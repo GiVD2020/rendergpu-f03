@@ -30,6 +30,8 @@ public:
     //create object per sphere, plane
     //translate object para virtual world
     shared_ptr<Object> createObject(QString filename, vec3 v, OBJECT_TYPES t);
+    shared_ptr<Object> createObject(QString filename, vec3 v, vec3 difuse, OBJECT_TYPES t);
+    shared_ptr<Object> createObject(QString filename, vec3 v, vec3 difuse, vec3 especular, vec3 ambient, float shineness, OBJECT_TYPES t);
     shared_ptr<Object> createObject(vec3 v, double aux, float data, OBJECT_TYPES t);
     //create object per fittedPlane
     //shared_ptr<Object> createObject(vec3 v, double aux, float data,float xmin, float xmax, float zmin,float zmax,OBJECT_TYPES t);
