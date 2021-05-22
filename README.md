@@ -148,11 +148,11 @@ Para poder comparar las imágenes obtenidas de estas dos técnicas lo mejor posi
 
 ![Phong](./resources/screenshots/phong_ejemplo.PNG)
 
-Por último, podemos visualizar como el sombreado de Toon en una esfera (`sphere0.obj`) proporciona un efecto más plano en sombreado de ésta haciéndola parecer menos realista.
+Por último, podemos visualizar como el sombreado de Toon en una esfera (`sphere0.obj`) proporciona un efecto más plano del sombreado de ésta haciéndola parecer menos realista.
 
 ![Toon](./resources/screenshots/toon_ejemplo.PNG)
 
-Cabe destacar la consulta de [Simulación Gouraud/Phong](https://rabbid76.github.io/graphics-snippets/html/stackoverflow/gouraud_phong.html) para visualizar distintas figuras con las distintas técnicas de shaders para comparar los imágenes obtenidas.
+Cabe destacar la consulta de [Simulación Gouraud/Phong](https://rabbid76.github.io/graphics-snippets/html/stackoverflow/gouraud_phong.html) para visualizar diversas figuras con las distintas técnicas de shaders para comparar los imágenes obtenidas.
 
 *(NOTA: Per a cada pas de l'enunciat (del 1 al 6), incloure captures de pantalla de les proves que heu fet per a demostrar la funcionalitat de la vostra pràctica amb explicacions de la seva configuració i com les heu aconseguides)*
 
