@@ -84,7 +84,7 @@ S'han adaptat els fitxer d'entrada d'escenes virtual per a poder posar els mater
 
 Es pot trobar un exemple a `basic_spheres_translated_diffuse.txt`
 
-
+#### 4) Shading
 
 
 
@@ -125,13 +125,21 @@ Shineness = 1.0
 ![Drag Racing](./resources/screenshots/shineness.png)
 
 
-### 3) texture
+### 3) Texture
 
-dades reals amb un pla amb textura. (Notem que hi ha força Z-fighting)
+Dades reals amb un pla amb textura. (Notem que hi ha força Z-fighting)
 
 ![Drag Racing](./resources/screenshots/fitted_plane_texture.png)
 
+### 3) Shading
 
+![Drag Racing](./resources/screenshots/normals)
+
+![Drag Racing](./resources/screenshots/gouraud_ejemplo)
+
+![Drag Racing](./resources/screenshots/phong_ejemplo)
+
+![Drag Racing](./resources/screenshots/toon_ejemplo)
 
 *(NOTA: Per a cada pas de l'enunciat (del 1 al 6), incloure captures de pantalla de les proves que heu fet per a demostrar la funcionalitat de la vostra pràctica amb explicacions de la seva configuració i com les heu aconseguides)*
 
