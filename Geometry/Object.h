@@ -92,7 +92,7 @@ public:
 
 
 private:
-    void initTexture();
+    virtual void initTexture();
 };
 
 

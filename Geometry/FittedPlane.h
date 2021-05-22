@@ -32,7 +32,7 @@ private:
 
     color4 vertex_colors[4]; // 8 colors RGBA associats a cada vertex
     void quad( int a, int b, int c, int d );
-
+    void initTexture() override;
 
 
     GLuint buffer;

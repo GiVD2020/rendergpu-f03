@@ -27,12 +27,24 @@ FittedPlane::FittedPlane(float xmin,float xmax, float zmin, float zmax): Object(
 
 void FittedPlane::quad( int a, int b, int c, int d )
 {
-    colors[Index] = vertex_colors[a]; points[Index] = vertexs[a]; Index++;
-    colors[Index] = vertex_colors[b]; points[Index] = vertexs[b]; Index++;
-    colors[Index] = vertex_colors[c]; points[Index] = vertexs[c]; Index++;
-    colors[Index] = vertex_colors[a]; points[Index] = vertexs[a]; Index++;
-    colors[Index] = vertex_colors[c]; points[Index] = vertexs[c]; Index++;
-    colors[Index] = vertex_colors[d]; points[Index] = vertexs[d]; Index++;
+    colors[Index] = vertex_colors[a]; points[Index] = vertexs[a];
+    textureVertexCoords[Index] = vec2(0,0);
+    Index++;
+    colors[Index] = vertex_colors[b]; points[Index] = vertexs[b];
+    textureVertexCoords[Index] = vec2(1,0);
+    Index++;
+    colors[Index] = vertex_colors[c]; points[Index] = vertexs[c];
+    textureVertexCoords[Index] = vec2(1,1);
+    Index++;
+    colors[Index] = vertex_colors[a]; points[Index] = vertexs[a];
+    textureVertexCoords[Index] = vec2(0,0);
+    Index++;
+    colors[Index] = vertex_colors[c]; points[Index] = vertexs[c];
+    textureVertexCoords[Index] = vec2(1,1);
+    Index++;
+    colors[Index] = vertex_colors[d]; points[Index] = vertexs[d];
+    textureVertexCoords[Index] = vec2(0,1);
+    Index++;
 }
 
 
@@ -44,6 +56,23 @@ void FittedPlane::make()
     // generacio de la geometria dels triangles per a visualitzar-lo
     Index = 0;
     quad( 1, 0, 2, 3 );
+    initTexture();
+}
+
+
+void FittedPlane::initTexture(){
+    qDebug() << "Initializing textures...";
+
+    // Carregar la textura
+    glActiveTexture(GL_TEXTURE0);
+    //passar el path de la textura que volem usar
+    //QOpenGLTexture *textura = new QOpenGLTexture(QImage("://resources/textures/earth3.png"));
+    //Codi necessari per passar de punter a shared_ptr
+    //shared_ptr<QOpenGLTexture> punter_Texture(textura);
+    //texture =  punter_Texture;
+    texture->setMinificationFilter(QOpenGLTexture::LinearMipMapLinear);
+    texture->setMagnificationFilter(QOpenGLTexture::Linear);
+    texture->bind(0);
 }
 
 
