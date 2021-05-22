@@ -137,6 +137,11 @@ La siguiente imagen es la representación de las normales de una esfera (`sphere
 
 ![Normales](./resources/screenshots/normals.PNG)
 
+En todas las imágenes del sombreado que se mostrarán seguidamente la configuración empleada ha sido la siguiente:
+- Material: `ambient = (0.2,0.2,0.2)`, `diffuse = (0.8,0.5,0.5)`, `especular = (1.0,1.0,1.0)`, `shineness = 20`.
+- Light: `iD_ = (0.8,0.8,0.8)`, `iS_ = (1,1,1)`, `iA_ = (0.2,0.2,0.2)`, `position_ = (10,10,20,0)`, `coeficients_ = (0,0,1)`
+- Scene: `lightAmbientGlobal = (0.3, 0.3, 0.3)`
+
 A continuación podemos ver una esfera (`sphere0.obj`) a la que se le ha aplicado el sombreado de Gouraud.
 
 ![Gouraud](./resources/screenshots/gouraud_ejemplo.PNG)
