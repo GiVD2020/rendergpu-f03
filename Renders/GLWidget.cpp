@@ -90,6 +90,8 @@ void GLWidget::initShadersGPU(){
     initShader("://resources/vshader_gouraud.glsl", "://resources/fshader_gouraud.glsl",1);
     initShader("://resources/vshader_phong.glsl", "://resources/fshader_phong.glsl",2);
     initShader("://resources/vshader_toon.glsl", "://resources/fshader_toon.glsl",3);
+    initShader("://resources/vshader_phong_texture.glsl", "://resources/fshader_phong_texture.glsl",4);
+
 }
 
 QSize GLWidget::minimumSizeHint() const {
@@ -222,6 +224,11 @@ void GLWidget::activaGouraudShader() {
 void GLWidget::activaPhongTex() {
     //A implementar a la fase 1 de la practica 2
     qDebug()<<"Estic a Phong Tex";
+    program = type_shaders[4];
+    program->link();
+    program->bind();
+    scene->toGPU(program);
+    updateShader();
 }
 
 void GLWidget::activaBackground() {
