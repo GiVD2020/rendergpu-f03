@@ -27,7 +27,7 @@ Segona pràctica de GiVD 2020-21
         - [x] Gouraud  |  (Estíbaliz)
     - Textures
         - [ ] Textura com material en un objecte
-        - [ ] Textura al pla base
+        - [x] Textura al pla base | Mario
 
 
 - Fase 2 (OPT)
@@ -77,11 +77,19 @@ La component shineness és la única que no és un vector, per tant per a seteja
 
 Els valors de cada component han sigut setejats en el constructor de la classe Material.
 
+### Comentari addicional:
+S'han adaptat els fitxer d'entrada d'escenes virtual per a poder posar els materials:
++ `brobject ,route ,position ,difuse color`
++ `brobject ,route ,position ,difuse color ,especular color ,ambient color ,shineness`
+
+Es pot trobar un exemple a `basic_spheres_translated_diffuse.txt`
+
+
 
 
 
 ## Screenshots
-#### 1) Adaptació a la lectura de fitxers de dades
+### 1) Adaptació a la lectura de fitxers de dades
 `virtual_data.txt` i `configMapping.txt`
 
 ![Drag Racing](./resources/screenshots/virtualdata.png)
@@ -92,7 +100,7 @@ Els valors de cada component han sigut setejats en el constructor de la classe M
 `basic_data_test.txt` amb les esferes juntes al pla y=0
 ![Drag Racing](./resources/screenshots/realdata2.png)
 
-#### 2) Material
+### 2) Material
 
 Els valors de les diverses components han sigut setejades per a què s’ens mostrin les circumferències de color: vermell, verde, blau i blanc segons la component que usem.
 En totes les execucions els valors són els mateixos però mostrem una component diferent. Per a deixar clar a quina correspon escribim junt a la imatge la component que és i quin valor té.
@@ -117,7 +125,11 @@ Shineness = 1.0
 ![Drag Racing](./resources/screenshots/shineness.png)
 
 
+### 3) texture
 
+dades reals amb un pla amb textura. (Notem que hi ha força Z-fighting)
+
+![Drag Racing](./resources/screenshots/fitted_plane_texture.png)
 
 
 
