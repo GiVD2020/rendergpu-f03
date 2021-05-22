@@ -12,6 +12,8 @@ shared_ptr<Scene> SceneFactoryData::createScene(QString filename, shared_ptr<Sce
     rdr->readFile(filename, map);
 
     shared_ptr<FittedPlane> ground = make_shared<FittedPlane>(map->getSetup()->Vxmin, map->getSetup()->Vxmax, map->getSetup()->Vzmin, map->getSetup()->Vzmax);
+    shared_ptr<QOpenGLTexture> texture = make_shared<QOpenGLTexture>(QImage(map->getSetup()->textura));
+    ground->setTexture(texture);
     ground->make();
     scene_already_existent->objects.push_back(ground);
 

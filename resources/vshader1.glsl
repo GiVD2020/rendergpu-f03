@@ -56,7 +56,9 @@ void main()
     //Fem test amb cada una de les components del material per veure que rebem correctament totes elles.
     //TESTEJAT I FUNCIONA AMB CADA UNA D'ELLES
     //color = vec4(lights[0].iA_g,1.0);//
+
     //color = vec4(material.ambient,1.0);
+
     //color = vec4(material.diffuse,1.0);
     //color = vec4(material.especular,1.0);
     //color = vec4(material.shineness,material.shineness,material.shineness,1.0);

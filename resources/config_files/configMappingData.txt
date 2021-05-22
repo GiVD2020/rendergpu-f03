@@ -1,5 +1,5 @@
 dataType,REALDATA
 limitsMonVirtual, -10, 10, 0, 2, -10, 10
 limitsMonReal, -10, 10, -10, 10
-base,plane, 0.0, 1.0, 0.0, -1,NULL
+base,plane, 0.0, 1.0, 0.0, -1,://resources/textures/2k_venus_surface.jpg
 prop, 1, 1, 30,brobject,COLOR_MAP_TYPE_INFERNO
