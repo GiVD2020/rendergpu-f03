@@ -1,7 +1,7 @@
 #version 330
 
 layout (location = 0) in vec4 vPosition;
-layout (location = 1) in vec4 vColor;
+layout (location = 1) in vec4 normals;
 layout (location = 2) in vec2 vCoordTexture;
 
 //struct de las luces
@@ -49,12 +49,16 @@ void main()
 {
     gl_Position = projection*model_view*vPosition;
     gl_Position = gl_Position/gl_Position.w;
-    //color = vColor;
+    //El output seran las normales porque queremos observar la visualizacion de las normales
+    //De modo que el input del correspondiente fragment seran las normales
+    color = normals;
     //SECCIÓ 2 FASE 1: MATERIAL:
     //Fem test amb cada una de les components del material per veure que rebem correctament totes elles.
     //TESTEJAT I FUNCIONA AMB CADA UNA D'ELLES
     //color = vec4(lights[0].iA_g,1.0);//
-    color = vec4(material.diffuse,1.0);
+
+    //color = vec4(material.ambient,1.0);
+
     //color = vec4(material.diffuse,1.0);
     //color = vec4(material.especular,1.0);
     //color = vec4(material.shineness,material.shineness,material.shineness,1.0);

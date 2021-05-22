@@ -8,7 +8,9 @@ uniform sampler2D texMap;
 
 void main()
 {
-    //colorOut = color;
-    colorOut = vec4(texture(texMap, v_texcoord).rgb, 1.0f);
+    //El input que recibimos son las normales
+    colorOut = (color +1)/2 ; //normalizamos el vector recibido para poder representarlo
+    //colorOut = vec4(1,0,0,1);
+    //colorOut = vec4(texture(texMap, v_texcoord).rgb, 1.0f);
 }
 

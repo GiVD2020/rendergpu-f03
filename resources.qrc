@@ -11,5 +11,11 @@
         <file>resources/textures/2k_earth_daymap.jpg</file>
         <file>resources/config_files/configMapping.txt</file>
         <file>resources/config_files/configMappingData.txt</file>
+        <file>resources/fshader_gouraud.glsl</file>
+        <file>resources/fshader_phong.glsl</file>
+        <file>resources/fshader_toon.glsl</file>
+        <file>resources/vshader_gouraud.glsl</file>
+        <file>resources/vshader_phong.glsl</file>
+        <file>resources/vshader_toon.glsl</file>
     </qresource>
 </RCC>
