@@ -87,7 +87,7 @@ public:
 
     virtual void aplicaTG(shared_ptr<TG> tg);
 
-    vector<vec2> calculateCoord(vector<vec4> n);
+    vector<vec2> coordenades();
 
 
 

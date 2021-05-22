@@ -91,6 +91,7 @@ void GLWidget::initShadersGPU(){
     initShader("://resources/vshader_phong.glsl", "://resources/fshader_phong.glsl",2);
     initShader("://resources/vshader_toon.glsl", "://resources/fshader_toon.glsl",3);
     initShader("://resources/vshader_phong_texture.glsl", "://resources/fshader_phong_texture.glsl",4);
+    initShader("://resources/vshader_phong_texture_indirect.glsl", "://resources/fshader_phong_texture_indirect.glsl",5);
 
 }
 
@@ -228,13 +229,23 @@ void GLWidget::activaPhongTex() {
     program->link();
     program->bind();
     scene->toGPU(program);
-    updateShader();
+    updateShaderTexture();
 }
 
+
+void GLWidget::activaIndirecte() {
+    //A implementar a la fase 2 de la practica 2
+    qDebug()<<"Estic a Phong Tex Indirecte";
+    program = type_shaders[5];
+    program->link();
+    program->bind();
+    scene->toGPU(program);
+    updateShaderTexture();
+
+}
 void GLWidget::activaBackground() {
     //A implementar a la fase 2 de la practica 2
-    qDebug()<<"Estic a Background";
-
+    qDebug()<<"Estic a Phong Tex Indirecte";
 }
 void GLWidget::activaBumpMapping() {
     //TO DO: a implementar a la fase 2 de la practica 2
@@ -259,6 +270,7 @@ void GLWidget::updateShader(){
 //Metode per canviar de shaders de textures
 void GLWidget::updateShaderTexture(){
     //A implementar a la fase 1 de la practica 2
+    updateGL();
 
 }
 

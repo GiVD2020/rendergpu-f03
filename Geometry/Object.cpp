@@ -166,12 +166,18 @@ void Object::make(){
     };
 
     Index = 0;
+    vector<vec2> coords = coordenades();
     for(unsigned int i=0; i<cares.size(); i++){
         for(unsigned int j=0; j<cares[i].idxVertices.size(); j++){
             points[Index] = vertexs[cares[i].idxVertices[j]];
             normals[Index] = normalsVertexs[cares[i].idxNormals[j]];
             if (!textVertexs.empty()){
                 textureVertexCoords[Index] = textVertexs[cares[i].idxTextures[j]];
+            }
+            //CAS en que l'objecte llegit no té cap vt, és a dir vertex texture
+            //EXERCICI OPCIONAL MAPPING INDIRECTA, TAMBÉ USEM CRIDA INDERECTE EN EL SEU RESPECTIU SHADER
+            else{
+                textureVertexCoords[Index] = coords[cares[i].idxVertices[j]];
             }
             Index++;
         }
@@ -374,5 +380,26 @@ void Object::aplicaTG(shared_ptr<TG> tg){
     make();
 
 }
+
+
+vector<vec2> Object::coordenades(){
+    vector<vec2> temporal(vertexs.size());
+    float u,v;
+    //1. calcula capsa
+    Capsa3D capsa = calculCapsa3D();
+    //2.posició centre capsa
+    vec3 centre = vec3(capsa.a/2.0, capsa.h/2.0, capsa.p/2.0);
+    for(int i=0; i<vertexs.size();i++){
+        //3.creació vector que va de centre al vertex
+        vec3 notNormal = (vertexs[i].x - centre.x, vertexs[i].y - centre.y,vertexs[i].z - centre.z);
+        vec3 normal = normalize(notNormal);
+        //4. usar les posicions d'aquest vector per calcular u,v
+        u = 0.5 - atan2(notNormal.z,notNormal.x)/(2.0*3.14);
+        v = 0.5 - asin(notNormal.y)/3.14;
+        temporal[i]=vec2(u,v);
+    }
+    return temporal;
+}
+
 
 
