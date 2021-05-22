@@ -133,13 +133,13 @@ Dades reals amb un pla amb textura. (Notem que hi ha força Z-fighting)
 
 ### 3) Shading
 
-![Drag Racing](./resources/screenshots/normals.png)
+![Drag Racing](./resources/screenshots/normals.PNG)
 
-![Drag Racing](./resources/screenshots/gouraud_ejemplo.png)
+![Drag Racing](./resources/screenshots/gouraud_ejemplo.PNG)
 
-![Drag Racing](./resources/screenshots/phong_ejemplo.png)
+![Drag Racing](./resources/screenshots/phong_ejemplo.PNG)
 
-![Drag Racing](./resources/screenshots/toon_ejemplo.png)
+![Drag Racing](./resources/screenshots/toon_ejemplo.PNG)
 
 *(NOTA: Per a cada pas de l'enunciat (del 1 al 6), incloure captures de pantalla de les proves que heu fet per a demostrar la funcionalitat de la vostra pràctica amb explicacions de la seva configuració i com les heu aconseguides)*
 
