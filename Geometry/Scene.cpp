@@ -9,7 +9,7 @@ Scene::Scene() {
     capsaMinima.a = 2;
     capsaMinima.h = 2;
     capsaMinima.p = 2;
-    lightAmbientGlobal = vec3(0.2, 0.2, 0.2);
+    lightAmbientGlobal = vec3(0.3, 0.3, 0.3);
 
 
 }
@@ -35,7 +35,8 @@ void Scene::addObject(shared_ptr<Object> obj) {
  * @brief Scene::toGPU
  */
 void Scene::toGPU(shared_ptr<QGLShaderProgram> p) {
-
+    setAmbientToGPU(p);
+    lightsToGPU(p);
     for(int i=0; i < objects.size(); i++){
         objects.at(i)->toGPU(p);
     }
@@ -89,10 +90,15 @@ void Scene::lightsToGPU(shared_ptr<QGLShaderProgram> program){
         for(int i=0; i < lights.size(); i++){
             lights.at(i)->LightsToGPU(program.get(), i);
         }
+        qDebug() << "Num Lights" << this -> lights.size();
+        GLuint numl;
+        numl = program->uniformLocation(QString("numl"));
+        glUniform1i(numl, this->lights.size());
     }
 
 void Scene::addLight(shared_ptr<Light> l) {
     lights.push_back(l);
+
 }
 
 /**

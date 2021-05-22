@@ -10,7 +10,6 @@ Object::Object(int npoints, QObject *parent) : QObject(parent){
     numPoints = npoints;
     points = new point4 [numPoints];
     normals = new point4 [numPoints];
-    colors = new point4 [numPoints];
     textureVertexCoords = new vec2 [numPoints];
     material = new Material();
     texture = nullptr;
@@ -25,7 +24,6 @@ Object::Object(int npoints, QObject *parent) : QObject(parent){
 Object::Object(int npoints, QString n) : numPoints(npoints){
     points = new point4 [numPoints];
     normals= new point4 [numPoints];
-    colors = new point4 [numPoints];
     textureVertexCoords = new vec2 [numPoints];
     material = new Material();
     texture = nullptr;
@@ -41,7 +39,6 @@ Object::Object(int npoints, QString n) : numPoints(npoints){
 Object::~Object(){
     delete points;
     delete normals;
-    delete colors;
     delete material;
     delete textureVertexCoords;
     //Borrem tots els elements del vector
@@ -80,7 +77,7 @@ void Object::toGPU(shared_ptr<QGLShaderProgram> pr) {
     glBufferData( GL_ARRAY_BUFFER, sizeof(point4)*Index + sizeof(point4)*Index + sizeof(vec2)*Index, NULL, GL_STATIC_DRAW );
     glBufferSubData( GL_ARRAY_BUFFER, 0, sizeof(point4)*Index, points );
     //aquí anirà les normals
-    glBufferSubData( GL_ARRAY_BUFFER, sizeof(point4)*Index, sizeof(point4)*Index, colors );
+    glBufferSubData( GL_ARRAY_BUFFER, sizeof(point4)*Index, sizeof(point4)*Index, normals );
     //buffer textura
     glBufferSubData( GL_ARRAY_BUFFER, sizeof(point4)*Index + sizeof(point4)*Index, sizeof(vec2)*Index, textureVertexCoords);
     //glBufferSubData( GL_ARRAY_BUFFER, sizeof(points)+sizeof(colors), sizeof(vertexsTextura), vertexsTextura );
@@ -154,7 +151,6 @@ void Object::make(){
         for(unsigned int j=0; j<cares[i].idxVertices.size(); j++){
             points[Index] = vertexs[cares[i].idxVertices[j]];
             normals[Index] = normalsVertexs[cares[i].idxNormals[j]];
-            colors[Index] = vec4(base_colors[j%4], 1.0);
             if (!textVertexs.empty()){
                 textureVertexCoords[Index] = textVertexs[cares[i].idxTextures[j]];
             }

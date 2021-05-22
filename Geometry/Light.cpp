@@ -16,7 +16,7 @@ Light::Light(LightType t) {
 
     coeficients_=vec3(0,0,1);
 
-    position_ = vec4(10,10,10,0);
+    position_ = vec4(10,10,20,0);
 
     angle_ = 15.0;
 

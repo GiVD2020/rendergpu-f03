@@ -41,9 +41,12 @@ void GLWidget::initializeGL() {
 
     initShadersGPU();
     program = type_shaders[0];
+    //type_shaders[0]->link();
+    type_shaders[0]->bind();
     // Creacio d'una Light per apoder modificar el seus valors amb la interficie
     auto l  = make_shared<Light>(Puntual);
     scene->addLight(l);
+    scene->setAmbientToGPU(program);
     scene->lightsToGPU(program);
 
     scene->camera->init(this->size().width(), this->size().height(), scene->capsaMinima);
@@ -115,7 +118,6 @@ void GLWidget::initShader(const char* vShaderFile, const char* fShaderFile, int 
     type_shaders[type_shader]->addShader(vshader);
     type_shaders[type_shader]->addShader(fshader);
     type_shaders[type_shader]->link();
-    type_shaders[type_shader]->bind();
 }
 
 /** Gestio de les animacions i la gravació d'imatges ***/

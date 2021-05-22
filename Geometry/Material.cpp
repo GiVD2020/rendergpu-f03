@@ -1,10 +1,10 @@
 #include "Geometry/Material.h"
 
 Material::Material(){
-    ambient = vec3(1.0,0.0,0.0);
-    diffuse= vec3(0.0,1.0,0.0);
-    especular = vec3(0.0,0.0,1.0);
-    shineness = 1.0;
+    ambient = vec3(0.2,0.2,0.2);
+    diffuse= vec3(0.8,0.5,0.5);
+    especular = vec3(1.0,1.0,1.0);
+    shineness = 20.;
 }
 
 Material::Material(vec3 d){
