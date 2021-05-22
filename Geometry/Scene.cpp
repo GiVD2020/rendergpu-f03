@@ -90,7 +90,7 @@ void Scene::lightsToGPU(shared_ptr<QGLShaderProgram> program){
         for(int i=0; i < lights.size(); i++){
             lights.at(i)->LightsToGPU(program.get(), i);
         }
-        qDebug() << "Num Lights" << this -> lights.size();
+        //qDebug() << "Num Lights" << this -> lights.size();
         GLuint numl;
         numl = program->uniformLocation(QString("numl"));
         glUniform1i(numl, this->lights.size());
