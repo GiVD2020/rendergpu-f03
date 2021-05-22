@@ -133,13 +133,26 @@ Dades reals amb un pla amb textura. (Notem que hi ha força Z-fighting)
 
 ### 3) Shading
 
-![Drag Racing](./resources/screenshots/normals.PNG)
+La siguiente imagen es la representación de las normales de una esfera (`sphere0.obj`).
 
-![Drag Racing](./resources/screenshots/gouraud_ejemplo.PNG)
+![Normales](./resources/screenshots/normals.PNG)
 
-![Drag Racing](./resources/screenshots/phong_ejemplo.PNG)
+A continuación podemos ver una esfera (`sphere0.obj`) a la que se le ha aplicado el sombreado de Gouraud.
 
-![Drag Racing](./resources/screenshots/toon_ejemplo.PNG)
+![Gouraud](./resources/screenshots/gouraud_ejemplo.PNG)
+
+En esta imagen se puede apreciar el uso del sompreado de Phong en una esfera (`sphere0.obj`). Pese a que pueden ser poco perceptible sus diferencias
+se puede observar que para Phong la luz que visualizamos se escuentra más suavizada, este es un resultado que cabría esperar ya que al calcular las normales para cada pixel en lugar de para cada vértice de la imagen el resultado será más 'natural' en lugar de tener una apariencia más pixelada.
+
+Para poder comparar las imágenes obtenidas de estas dos técnicas lo mejor posible es recomendable poner la componente especular de la luz a (1,1,1).
+
+![Phong](./resources/screenshots/phong_ejemplo.PNG)
+
+Por último, podemos visualizar como el sombreado de Toon en una esfera (`sphere0.obj`) proporciona un efecto más plano en sombreado de ésta haciéndola parecer menos realista.
+
+![Toon](./resources/screenshots/toon_ejemplo.PNG)
+
+Cabe destacar la consulta de [Simulación Gouraud/Phong](https://rabbid76.github.io/graphics-snippets/html/stackoverflow/gouraud_phong.html) para visualizar distintas figuras con las distintas técnicas de shaders para comparar los imágenes obtenidas.
 
 *(NOTA: Per a cada pas de l'enunciat (del 1 al 6), incloure captures de pantalla de les proves que heu fet per a demostrar la funcionalitat de la vostra pràctica amb explicacions de la seva configuració i com les heu aconseguides)*
 
