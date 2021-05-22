@@ -245,7 +245,7 @@ void GLWidget::activaIndirecte() {
 }
 void GLWidget::activaBackground() {
     //A implementar a la fase 2 de la practica 2
-    qDebug()<<"Estic a Phong Tex Indirecte";
+    qDebug()<<"Estic a Background";
 }
 void GLWidget::activaBumpMapping() {
     //TO DO: a implementar a la fase 2 de la practica 2
