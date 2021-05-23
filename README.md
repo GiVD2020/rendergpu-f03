@@ -155,13 +155,13 @@ A continuació podem observar una esfera (`sphere0.obj`)a la que se li ha aplica
 
 ![Gouraud](./resources/screenshots/gouraud_ejemplo.PNG)
 
-En aquesta imatge es pot apreciar l'ús del sombrejat de Phong en una esfera (`sphere0.obj`). Tot i que les diferències son poc perceptibles es pot observar que per a Phong la llum que visualitzem es troba més suavitzada, aquest resultat és l'esperat ja que al calcular les normals per a cada píxel, enlloc de per a cada vèrtex de la imatge el resultat serà més 'natural' enlloc de tenir una apariencia més pixelada.
+En aquesta imatge es pot apreciar l'ús del sombrejat de Phong en una esfera (`sphere0.obj`). Tot i que les diferències son poc perceptibles es pot observar que per a Phong la llum que visualitzem es troba més suavitzada, aquest resultat és l'esperat ja que al calcular les normals per a cada píxel, enlloc de per a cada vèrtex de la imatge, el resultat serà més 'natural' enlloc de tenir una apariencia més pixelada.
 
 Per poder comparar les imatges obtingudes amb aquestes dues tècniques la millor opció es posar la component especular de la llum a (1,1,1).
 
 ![Phong](./resources/screenshots/phong_ejemplo.PNG)
 
-Finalment, podem visualitzar com l'ombrejat de Toon en una  esfera (`sphere0.obj`) proporciona un efecte més pla del sombrejat de la esfera, fent-la semblar més realista.
+Finalment, podem visualitzar com l'ombrejat de Toon en una  esfera (`sphere0.obj`) proporciona un efecte més pla del sombrejat de la esfera, fent-la semblar menys realista.
 
 ![Toon](./resources/screenshots/toon_ejemplo.PNG)
 
@@ -169,7 +169,7 @@ Destacar la consult de  [Simulació Gouraud/Phong](https://rabbid76.github.io/gr
 
 ### 5) Texture
 
-La següent imatge ens mostra l'objecte monkeyText amb la textura `MonkeyTex.jpg`, la configuració ha sigut la mateixa que s'ha utilitzat anteriorment.
+La següent imatge ens mostra l'objecte `MonkeyText.obj` amb la textura `MonkeyTex.jpg`, la configuració ha sigut la mateixa que s'ha utilitzat anteriorment.
 
 ![Drag Racing](./resources/screenshots/monkeyText.png)
 
