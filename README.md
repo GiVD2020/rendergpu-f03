@@ -173,7 +173,7 @@ La següent imatge ens mostra l'objecte monkeyText amb la textura `MonkeyTex.jpg
 
 ![Drag Racing](./resources/screenshots/monkeyText.png)
 
-La següent imatge ens mostra l'objecte capsule amb la `textura 2k_earth_daymap.jpg`, la configuració ha sigut la mateixa que s'ha utilitzat anteriorment.
+La següent imatge ens mostra l'objecte `capsule.obj` amb la `textura 2k_earth_daymap.jpg`, la configuració ha sigut la mateixa que s'ha utilitzat anteriorment.
 
 ![Drag Racing](./resources/screenshots/capsuleText.png)
 
