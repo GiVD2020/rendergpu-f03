@@ -178,9 +178,11 @@ La següent imatge ens mostra l'objecte capsule amb la textura 2k_earth_daymap.j
 ![Drag Racing](./resources/screenshots/capsuleText.png)
 
 La següent imatge són les mateixes dades que l'anterior però aquest cop fent servir el mapeig indirecte de textures.
+
 ![Drag Racing](./resources/screenshots/capsuleTextIndirecte.png)
 
-La següent imatge es correspon a l'objecte sphere sense llums i amb textura indirecte
+La següent imatge es correspon a l'objecte sphere sense llums i amb textura indirecte.
+
 ![Drag Racing](./resources/screenshots/sphereIndirecte.png)
 
 
