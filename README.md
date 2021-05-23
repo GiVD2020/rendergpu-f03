@@ -32,7 +32,7 @@ Segona pràctica de GiVD 2020-21
 
 - Fase 2 (OPT)
     - [x] Toon-shading i èmfasi de siluetes  |  (Estíbaliz)
-    - [ ] Mapping indirecte de textures
+    - [x] Mapping indirecte de textures | (Joan)
     - [ ] Animacions amb dades temporals
     - [ ] Normal mapping
     - [ ] Entorn amb textures
@@ -62,6 +62,14 @@ Podem trobar un exemple de 1. a `basic_spheres.txt` i de 2. a  basic_spheres_tra
 
 Pel que fa a dades reals, el funcionament segueix el de la practica 1 en els fitxers de configuració. Es pot trobar algun exemple a `basic_data_test.txt`. A les screenshots es poden veure dos exemples amb dades reals.
 
+
+### Comentari addicional:
+S'han adaptat els fitxer d'entrada d'escenes virtual per a poder posar els materials:
++ `brobject ,route ,position ,difuse color`
++ `brobject ,route ,position ,difuse color ,especular color ,ambient color ,shineness`
+
+Es pot trobar un exemple a `basic_spheres_translated_diffuse.txt`
+
 ##
 #### 2) Material
 
@@ -76,17 +84,18 @@ Per comprobar que aquestes dades han sigut agafades correctament hem diverses ex
 La component shineness és la única que no és un vector, per tant per a setejar que el color sigui igual a ella hem creat un vec4 que cada component és igual al valor de shineness.
 
 Els valors de cada component han sigut setejats en el constructor de la classe Material.
+#### 5) Textures  
 
-### Comentari addicional:
-S'han adaptat els fitxer d'entrada d'escenes virtual per a poder posar els materials:
-+ `brobject ,route ,position ,difuse color`
-+ `brobject ,route ,position ,difuse color ,especular color ,ambient color ,shineness`
+Per a poder passar les textures a la gpu hem agat d’afegir al buffer espai per a el vector de vertexstexture.
+Com que inicialment només podem aplicar textures als objectes que el seu fitxer obj conté les coordenades de vt hem afegit un if comprobant que el vector on s’ha afegit aquestes coordenades no està buit, així els objectes que no tinguin textures no sel’s intentara aplicar la textura i evitarem errors.
 
-Es pot trobar un exemple a `basic_spheres_translated_diffuse.txt`
+OPCIONAL: Mapeig indirecte
 
-#### 4) Shading
+En aquest apartat hem fot l’opcional de textures indirectes. Per a fer-ho, en els shaders de phong_texture_indirect hem modificat el codi per a que enlloc de passar desde el vshader a fshader les coordenades de textures que s’han enviat desde cpu, fem el càlcul de u,v.
 
-
+A més tal i com hem explicat anteriorment els objectes que no tenen vt no sel’s pot aplicar textures, el que hem fet és que en la classe objecte, en el mètode make, al assignar els vertexs de la textura, en cas que no s’hagin llegit del fitxers els calcularem manualment amb la fòrmula de mapeig indirecte.
+Així les spheres i alguns altres objectes també podran tenir textures.
+En aquesta part hem tingut alguns problemes i actualment la textura no és mapejada correctament.
 
 ## Screenshots
 ### 1) Adaptació a la lectura de fitxers de dades
@@ -125,39 +134,57 @@ Shineness = 1.0
 ![Drag Racing](./resources/screenshots/shineness.png)
 
 
-### 3) Texture
+### 3) Light
 
-Dades reals amb un pla amb textura. (Notem que hi ha força Z-fighting)
+AÑADIR AQUÍ LAS SCREENSHOTS DE LUZES
 
-![Drag Racing](./resources/screenshots/fitted_plane_texture.png)
 
-### 3) Shading
-
-La siguiente imagen es la representación de las normales de una esfera (`sphere0.obj`).
+### 4) Shading
+La següent imatge és la representació de les normales d'una esfera (`sphere0.obj`).
 
 ![Normales](./resources/screenshots/normals.PNG)
 
-En todas las imágenes del sombreado que se mostrarán seguidamente la configuración empleada ha sido la siguiente:
+En totes les imatges d'ombre que es mostren la configuració que s'ha usat és la següent:
 - Material: `ambient = (0.2,0.2,0.2)`, `diffuse = (0.8,0.5,0.5)`, `especular = (1.0,1.0,1.0)`, `shineness = 20`.
 - Light: `iD_ = (0.8,0.8,0.8)`, `iS_ = (1,1,1)`, `iA_ = (0.2,0.2,0.2)`, `position_ = (10,10,20,0)`, `coeficients_ = (0,0,1)`
 - Scene: `lightAmbientGlobal = (0.3, 0.3, 0.3)`
 
-A continuación podemos ver una esfera (`sphere0.obj`) a la que se le ha aplicado el sombreado de Gouraud.
+A continuació podem observar una esfera (`sphere0.obj`)a la que se li ha aplicat el sombrejat de Gouraud.
 
 ![Gouraud](./resources/screenshots/gouraud_ejemplo.PNG)
 
-En esta imagen se puede apreciar el uso del sompreado de Phong en una esfera (`sphere0.obj`). Pese a que pueden ser poco perceptible sus diferencias
-se puede observar que para Phong la luz que visualizamos se escuentra más suavizada, este es un resultado que cabría esperar ya que al calcular las normales para cada pixel en lugar de para cada vértice de la imagen el resultado será más 'natural' en lugar de tener una apariencia más pixelada.
+En aquesta imatge es pot apreciar l'ús del sombrejat de Phong en una esfera (`sphere0.obj`). Tot i que les diferències son poc perceptibles es pot observar que per a Phong la llum que visualitzem es troba més suavitzada, aquest resultat és l'esperat ja que al calcular les normals per a cada píxel, enlloc de per a cada vèrtex de la imatge el resultat serà més 'natural' enlloc de tenir una apariencia més pixelada.
 
-Para poder comparar las imágenes obtenidas de estas dos técnicas lo mejor posible es recomendable poner la componente especular de la luz a (1,1,1).
+Per poder comparar les imatges obtingudes amb aquestes dues tècniques la millor opció es posar la component especular de la llum a (1,1,1).
 
 ![Phong](./resources/screenshots/phong_ejemplo.PNG)
 
-Por último, podemos visualizar como el sombreado de Toon en una esfera (`sphere0.obj`) proporciona un efecto más plano del sombreado de ésta haciéndola parecer menos realista.
+Finalment, podem visualitzar com l'ombrejat de Toon en una  esfera (`sphere0.obj`) proporciona un efecte més pla del sombrejat de la esfera, fent-la semblar més realista.
 
 ![Toon](./resources/screenshots/toon_ejemplo.PNG)
 
-Cabe destacar la consulta de [Simulación Gouraud/Phong](https://rabbid76.github.io/graphics-snippets/html/stackoverflow/gouraud_phong.html) para visualizar diversas figuras con las distintas técnicas de shaders para comparar los imágenes obtenidas.
+Destacar la consult de  [Simulación Gouraud/Phong](https://rabbid76.github.io/graphics-snippets/html/stackoverflow/gouraud_phong.html) per a visualitzar diverses figures amb les diferentes tècniques de shaders per a tal de poder comparar les imatges obtingudes.
+
+### 5) Texture
+
+La següent imatge ens mostra l'objecte monkeyText amb la textura MonkeyTex.jpg, la configuració ha sigut la mateixa que s'ha utilitzat anteriorment.
+
+![Drag Racing](./resources/screenshots/monkeyText.png)
+
+La següent imatge ens mostra l'objecte capsule amb la textura 2k_earth_daymap.jpg, la configuració ha sigut la mateixa que s'ha utilitzat anteriorment.
+
+![Drag Racing](./resources/screenshots/capsuleText.png)
+
+La següent imatge són les mateixes dades que l'anterior però aquest cop fent servir el mapeig indirecte de textures.
+![Drag Racing](./resources/screenshots/capsuleTextIndirecte.png)
+
+La següent imatge es correspon a l'objecte sphere sense llums i amb textura indirecte
+![Drag Racing](./resources/screenshots/sphereIndirecte.png)
+
+
+Dades reals amb un pla amb textura. (Notem que hi ha força Z-fighting)
+
+![Drag Racing](./resources/screenshots/fitted_plane_texture.png)
 
 *(NOTA: Per a cada pas de l'enunciat (del 1 al 6), incloure captures de pantalla de les proves que heu fet per a demostrar la funcionalitat de la vostra pràctica amb explicacions de la seva configuració i com les heu aconseguides)*
 
