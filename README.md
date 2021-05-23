@@ -169,7 +169,7 @@ Destacar la consult de  [Simulació Gouraud/Phong](https://rabbid76.github.io/gr
 
 ### 5) Texture
 
-La següent imatge ens mostra l'objecte `MonkeyText.obj` amb la textura `MonkeyTex.png`, la configuració ha sigut la mateixa que s'ha utilitzat anteriorment.
+La següent imatge ens mostra l'objecte `MonkeyTex.obj` amb la textura `MonkeyTex.png`, la configuració ha sigut la mateixa que s'ha utilitzat anteriorment.
 
 ![Drag Racing](./resources/screenshots/monkeyText.png)
 
