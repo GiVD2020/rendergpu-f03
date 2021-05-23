@@ -18,7 +18,7 @@ Segona pràctica de GiVD 2020-21
         - [x] Escenes de dades Reals | (Mario)
     -  [x] Material | Joan
     - Light
-        - [ ] Puntual
+        - [x] Puntual | (Ignacio)
         - [ ] Direccional
         - [ ] Spotlight
         - [ ] Ambient Global
