@@ -26,8 +26,8 @@ Segona pràctica de GiVD 2020-21
         - [x] Phong  |  (Estíbaliz)
         - [x] Gouraud  |  (Estíbaliz)
     - Textures
-        - [x] Textura com material en un objecte | Joan
-        - [x] Textura al pla base | Mario
+        - [x] Textura com material en un objecte | (Joan)
+        - [x] Textura al pla base | (Mario)
 
 
 - Fase 2 (OPT)
