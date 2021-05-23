@@ -44,16 +44,17 @@ void GLWidget::initializeGL() {
     //type_shaders[0]->link();
     type_shaders[0]->bind();
     // Creacio d'una Light per apoder modificar el seus valors amb la interficie
+    auto l  = make_shared<Light>(Puntual);
     //auto l1  = make_shared<Light>(Puntual);
     //realizamos los cambios pertinentes respecto al constructor base
-    auto l2 = make_shared<Light>(Direccional, vec4(1,5,10,0), vec3(0.2,0.2,0.2), vec3(0.8,0.8,0.8), vec3(1,1,1), vec3(0,0,1), vec4(10,5.0,1.0), 35.0);
-    auto l3 = make_shared<Light>(Spot, vec4(1,5,10,0), vec3(0.2,0.2,0.2), vec3(0.8,0.8,0.8), vec3(1,1,1), vec3(0,0,1), vec4(10,5.0,1.0), 30.0);
+    //auto l2 = make_shared<Light>(Direccional, vec4(1,5,10,0), vec3(0.2,0.2,0.2), vec3(0.8,0.8,0.8), vec3(1,1,1), vec3(0,0,1), vec4(10,5.0,1.0), 35.0);
+    //auto l3 = make_shared<Light>(Spot, vec4(1,5,10,0), vec3(0.2,0.2,0.2), vec3(0.8,0.8,0.8), vec3(1,1,1), vec3(0,0,1), vec4(10,5.0,1.0), 30.0);
+    scene->addLight(l);
     //scene->addLight(l1);
-    scene->addLight(l2);
+    //scene->addLight(l2);
     //scene->addLight(l3);
     scene->setAmbientToGPU(program);
     scene->lightsToGPU(program);
-
     scene->camera->init(this->size().width(), this->size().height(), scene->capsaMinima);
     emit ObsCameraChanged(scene->camera);
     emit FrustumCameraChanged(scene->camera);
