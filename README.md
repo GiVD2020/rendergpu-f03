@@ -84,6 +84,7 @@ Per comprobar que aquestes dades han sigut agafades correctament hem diverses ex
 La component shineness és la única que no és un vector, per tant per a setejar que el color sigui igual a ella hem creat un vec4 que cada component és igual al valor de shineness.
 
 Els valors de cada component han sigut setejats en el constructor de la classe Material.
+##
 #### 5) Textures  
 
 Per a poder passar les textures a la gpu hem agat d’afegir al buffer espai per a el vector de vertexstexture.
@@ -91,11 +92,12 @@ Com que inicialment només podem aplicar textures als objectes que el seu fitxer
 
 OPCIONAL: Mapeig indirecte
 
-En aquest apartat hem fot l’opcional de textures indirectes. Per a fer-ho, en els shaders de phong_texture_indirect hem modificat el codi per a que enlloc de passar desde el vshader a fshader les coordenades de textures que s’han enviat desde cpu, fem el càlcul de u,v.
+En aquest apartat hem fet l’opcional de textures indirectes. Per a fer-ho, en els shaders de phong_texture_indirect hem modificat el codi per a que enlloc de passar desde el vshader a fshader les coordenades de textures que s’han enviat desde cpu, fem el càlcul de u,v.
 
 A més tal i com hem explicat anteriorment els objectes que no tenen vt no sel’s pot aplicar textures, el que hem fet és que en la classe objecte, en el mètode make, al assignar els vertexs de la textura, en cas que no s’hagin llegit del fitxers els calcularem manualment amb la fòrmula de mapeig indirecte.
 Així les spheres i alguns altres objectes també podran tenir textures.
 En aquesta part hem tingut alguns problemes i actualment la textura no és mapejada correctament.
+##
 
 ## Screenshots
 ### 1) Adaptació a la lectura de fitxers de dades
