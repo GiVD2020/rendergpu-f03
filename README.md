@@ -97,6 +97,9 @@ En aquest apartat hem fet l’opcional de textures indirectes. Per a fer-ho, en 
 A més tal i com hem explicat anteriorment els objectes que no tenen vt no sel’s pot aplicar textures, el que hem fet és que en la classe objecte, en el mètode make, al assignar els vertexs de la textura, en cas que no s’hagin llegit del fitxers els calcularem manualment amb la fòrmula de mapeig indirecte.
 Així les spheres i alguns altres objectes també podran tenir textures.
 En aquesta part hem tingut alguns problemes i actualment la textura no és mapejada correctament.
+
+Per a poder provar els shaders de mapping inderecte hem afegit al menú de textures una nova opció, anomenada PhongTex Indirecte, habilitant aquesta opció podrem provar les textures indirectes.
+
 ##
 
 ## Screenshots
