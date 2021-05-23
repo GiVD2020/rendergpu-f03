@@ -949,6 +949,7 @@
     </property>
     <addaction name="action_activa_background"/>
     <addaction name="action_phong_tex"/>
+    <addaction name="action_indirecte"/>
     <addaction name="action_bump_mapping"/>
     <addaction name="action_environmental_mapping"/>
     <addaction name="action_transparencies"/>
@@ -1092,6 +1093,20 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+D</string>
+   </property>
+  </action>
+  <action name="action_indirecte">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>PhongTex Indirecte</string>
+   </property>
+   <property name="toolTip">
+    <string>PhongTex Indirecte</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+I</string>
    </property>
   </action>
  </widget>
