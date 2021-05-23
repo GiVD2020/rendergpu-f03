@@ -16,7 +16,7 @@ Segona pràctica de GiVD 2020-21
         - [x] Objectes  |  (Mario)
         - [x] Escenes virtuals  |  (Mario)
         - [x] Escenes de dades Reals | (Mario)
-    -  [x] Material | (Joan)
+    -  [x] Material | Joan
     - Light
         - [ ] Puntual
         - [ ] Direccional
@@ -26,7 +26,7 @@ Segona pràctica de GiVD 2020-21
         - [x] Phong  |  (Estíbaliz)
         - [x] Gouraud  |  (Estíbaliz)
     - Textures
-        - [ ] Textura com material en un objecte
+        - [x] Textura com material en un objecte | Joan
         - [x] Textura al pla base | Mario
 
 
