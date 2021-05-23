@@ -49,7 +49,7 @@ void main()
 {
     gl_Position = projection*model_view*vPosition;
     gl_Position = gl_Position/gl_Position.w;
-    //El output seran las normales porque queremos observar la visualizacion de las normales
+    //El output seran las normales porque queremos observar la visualizacion de estas
     //De modo que el input del correspondiente fragment seran las normales
     color = normals;
     //SECCIÓ 2 FASE 1: MATERIAL:
