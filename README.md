@@ -165,15 +165,15 @@ Finalment, podem visualitzar com l'ombrejat de Toon en una  esfera (`sphere0.obj
 
 ![Toon](./resources/screenshots/toon_ejemplo.PNG)
 
-Destacar la consult de  [Simulación Gouraud/Phong](https://rabbid76.github.io/graphics-snippets/html/stackoverflow/gouraud_phong.html) per a visualitzar diverses figures amb les diferentes tècniques de shaders per a tal de poder comparar les imatges obtingudes.
+Destacar la consult de  [Simulació Gouraud/Phong](https://rabbid76.github.io/graphics-snippets/html/stackoverflow/gouraud_phong.html) per a visualitzar diverses figures amb les diferentes tècniques de shaders per a tal de poder comparar les imatges obtingudes.
 
 ### 5) Texture
 
-La següent imatge ens mostra l'objecte monkeyText amb la textura MonkeyTex.jpg, la configuració ha sigut la mateixa que s'ha utilitzat anteriorment.
+La següent imatge ens mostra l'objecte monkeyText amb la textura `MonkeyTex.jpg`, la configuració ha sigut la mateixa que s'ha utilitzat anteriorment.
 
 ![Drag Racing](./resources/screenshots/monkeyText.png)
 
-La següent imatge ens mostra l'objecte capsule amb la textura 2k_earth_daymap.jpg, la configuració ha sigut la mateixa que s'ha utilitzat anteriorment.
+La següent imatge ens mostra l'objecte capsule amb la `textura 2k_earth_daymap.jpg`, la configuració ha sigut la mateixa que s'ha utilitzat anteriorment.
 
 ![Drag Racing](./resources/screenshots/capsuleText.png)
 
@@ -181,7 +181,7 @@ La següent imatge són les mateixes dades que l'anterior però aquest cop fent 
 
 ![Drag Racing](./resources/screenshots/capsuleTextIndirecte.png)
 
-La següent imatge es correspon a l'objecte sphere sense llums i amb textura indirecte.
+La següent imatge es correspon a l'objecte `sphere0.obj` sense llums i amb textura indirecte.
 
 ![Drag Racing](./resources/screenshots/sphereIndirecte.png)
 
