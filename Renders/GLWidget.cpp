@@ -45,10 +45,16 @@ void GLWidget::initializeGL() {
     type_shaders[0]->bind();
     // Creacio d'una Light per apoder modificar el seus valors amb la interficie
     auto l  = make_shared<Light>(Puntual);
+    //auto l1  = make_shared<Light>(Puntual);
+    //realizamos los cambios pertinentes respecto al constructor base
+    //auto l2 = make_shared<Light>(Direccional, vec4(1,5,10,0), vec3(0.2,0.2,0.2), vec3(0.8,0.8,0.8), vec3(1,1,1), vec3(0,0,1), vec4(10,5.0,1.0), 35.0);
+    //auto l3 = make_shared<Light>(Spot, vec4(1,5,10,0), vec3(0.2,0.2,0.2), vec3(0.8,0.8,0.8), vec3(1,1,1), vec3(0,0,1), vec4(10,5.0,1.0), 30.0);
     scene->addLight(l);
+    //scene->addLight(l1);
+    //scene->addLight(l2);
+    //scene->addLight(l3);
     scene->setAmbientToGPU(program);
     scene->lightsToGPU(program);
-
     scene->camera->init(this->size().width(), this->size().height(), scene->capsaMinima);
     emit ObsCameraChanged(scene->camera);
     emit FrustumCameraChanged(scene->camera);
@@ -90,6 +96,9 @@ void GLWidget::initShadersGPU(){
     initShader("://resources/vshader_gouraud.glsl", "://resources/fshader_gouraud.glsl",1);
     initShader("://resources/vshader_phong.glsl", "://resources/fshader_phong.glsl",2);
     initShader("://resources/vshader_toon.glsl", "://resources/fshader_toon.glsl",3);
+    initShader("://resources/vshader_phong_texture.glsl", "://resources/fshader_phong_texture.glsl",4);
+    initShader("://resources/vshader_phong_texture_indirect.glsl", "://resources/fshader_phong_texture_indirect.glsl",5);
+
 }
 
 QSize GLWidget::minimumSizeHint() const {
@@ -222,12 +231,27 @@ void GLWidget::activaGouraudShader() {
 void GLWidget::activaPhongTex() {
     //A implementar a la fase 1 de la practica 2
     qDebug()<<"Estic a Phong Tex";
+    program = type_shaders[4];
+    program->link();
+    program->bind();
+    scene->toGPU(program);
+    updateShaderTexture();
 }
 
+
+void GLWidget::activaIndirecte() {
+    //A implementar a la fase 2 de la practica 2
+    qDebug()<<"Estic a Phong Tex Indirecte";
+    program = type_shaders[5];
+    program->link();
+    program->bind();
+    scene->toGPU(program);
+    updateShaderTexture();
+
+}
 void GLWidget::activaBackground() {
     //A implementar a la fase 2 de la practica 2
     qDebug()<<"Estic a Background";
-
 }
 void GLWidget::activaBumpMapping() {
     //TO DO: a implementar a la fase 2 de la practica 2
@@ -252,6 +276,7 @@ void GLWidget::updateShader(){
 //Metode per canviar de shaders de textures
 void GLWidget::updateShaderTexture(){
     //A implementar a la fase 1 de la practica 2
+    updateGL();
 
 }
 

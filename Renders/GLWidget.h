@@ -47,6 +47,7 @@ public slots:
     void activaGouraudShader();
 
     void activaPhongTex();
+    void activaIndirecte();
     void activaBackground();
     void activaBumpMapping();
     void activaEnvMapping();
@@ -96,7 +97,7 @@ private:
     shared_ptr<QGLShaderProgram> program; // Per ars nomes es té un parell vertex-fragment
                                // Cal guardar-ne més d'un en la primera fase.
 
-    shared_ptr<QGLShaderProgram> type_shaders[4];
+    shared_ptr<QGLShaderProgram> type_shaders[6];
     void initShader(const char* vertexShaderFile, const char* fragmentShaderFile, int type_shader);
     void initShadersGPU();
     void updateShader();

@@ -16,7 +16,7 @@ Segona pràctica de GiVD 2020-21
         - [x] Objectes  |  (Mario)
         - [x] Escenes virtuals  |  (Mario)
         - [x] Escenes de dades Reals | (Mario)
-    -  [x] Material | (Joan)
+    -  [x] Material | Joan
     - Light
         - [ ] Puntual
         - [ ] Direccional
@@ -26,8 +26,8 @@ Segona pràctica de GiVD 2020-21
         - [x] Phong  |  (Estíbaliz)
         - [x] Gouraud  |  (Estíbaliz)
     - Textures
-        - [ ] Textura com material en un objecte
-        - [x] Textura al pla base | Mario
+        - [x] Textura com material en un objecte | (Joan)
+        - [x] Textura al pla base | (Mario)
 
 
 - Fase 2 (OPT)
@@ -84,7 +84,7 @@ S'han adaptat els fitxer d'entrada d'escenes virtual per a poder posar els mater
 
 Es pot trobar un exemple a `basic_spheres_translated_diffuse.txt`
 
-
+#### 4) Shading
 
 
 
@@ -125,13 +125,39 @@ Shineness = 1.0
 ![Drag Racing](./resources/screenshots/shineness.png)
 
 
-### 3) texture
+### 3) Texture
 
-dades reals amb un pla amb textura. (Notem que hi ha força Z-fighting)
+Dades reals amb un pla amb textura. (Notem que hi ha força Z-fighting)
 
 ![Drag Racing](./resources/screenshots/fitted_plane_texture.png)
 
+### 3) Shading
 
+La siguiente imagen es la representación de las normales de una esfera (`sphere0.obj`).
+
+![Normales](./resources/screenshots/normals.PNG)
+
+En todas las imágenes del sombreado que se mostrarán seguidamente la configuración empleada ha sido la siguiente:
+- Material: `ambient = (0.2,0.2,0.2)`, `diffuse = (0.8,0.5,0.5)`, `especular = (1.0,1.0,1.0)`, `shineness = 20`.
+- Light: `iD_ = (0.8,0.8,0.8)`, `iS_ = (1,1,1)`, `iA_ = (0.2,0.2,0.2)`, `position_ = (10,10,20,0)`, `coeficients_ = (0,0,1)`
+- Scene: `lightAmbientGlobal = (0.3, 0.3, 0.3)`
+
+A continuación podemos ver una esfera (`sphere0.obj`) a la que se le ha aplicado el sombreado de Gouraud.
+
+![Gouraud](./resources/screenshots/gouraud_ejemplo.PNG)
+
+En esta imagen se puede apreciar el uso del sompreado de Phong en una esfera (`sphere0.obj`). Pese a que pueden ser poco perceptible sus diferencias
+se puede observar que para Phong la luz que visualizamos se escuentra más suavizada, este es un resultado que cabría esperar ya que al calcular las normales para cada pixel en lugar de para cada vértice de la imagen el resultado será más 'natural' en lugar de tener una apariencia más pixelada.
+
+Para poder comparar las imágenes obtenidas de estas dos técnicas lo mejor posible es recomendable poner la componente especular de la luz a (1,1,1).
+
+![Phong](./resources/screenshots/phong_ejemplo.PNG)
+
+Por último, podemos visualizar como el sombreado de Toon en una esfera (`sphere0.obj`) proporciona un efecto más plano del sombreado de ésta haciéndola parecer menos realista.
+
+![Toon](./resources/screenshots/toon_ejemplo.PNG)
+
+Cabe destacar la consulta de [Simulación Gouraud/Phong](https://rabbid76.github.io/graphics-snippets/html/stackoverflow/gouraud_phong.html) para visualizar diversas figuras con las distintas técnicas de shaders para comparar los imágenes obtenidas.
 
 *(NOTA: Per a cada pas de l'enunciat (del 1 al 6), incloure captures de pantalla de les proves que heu fet per a demostrar la funcionalitat de la vostra pràctica amb explicacions de la seva configuració i com les heu aconseguides)*
 
