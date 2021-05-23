@@ -48,7 +48,7 @@ void main(){
         } else
         {
             N = normalize(fNormal.xyz);
-            L = -lights[i].direction_g.xyz;
+            L = normalize(-lights[i].direction_g.xyz);
             intensity = dot(L,N);
         }
 
