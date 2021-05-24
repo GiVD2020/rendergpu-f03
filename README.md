@@ -41,13 +41,13 @@ Esta práctica está adaptada a partir código de la práctica anterior de Raytr
     - [ ] Transparencias via environmental mapping.
 
 
-**Extensions**
 
-No hemos añadido ninguna funcionalidad extra fuera del guión de la práctica
+**Extensions**
+S'han implementat un parell de extensions corresponents a la fase 2, veure índex.
 
 
 ## Memòria
-#### 1) Adaptació a la lectura de fitxers de dades
+### 1) Adaptació a la lectura de fitxers de dades
 Primerament, hem adaptat totes les classes de la pràctica anterior de tal manera que encaixessin amb les noves classes (`/library`). D'aquesta manera hem fet també el aplicaTG a `Object.c`. A continuació hem creat la classe `FittedPlane` que hereda d'Object i implementa la creació d'un pla acotat.
 
 Pel que fa a la càrrega de dades virtuals. Dins la classe `Builder` tenir el mètode que les carrega. Ara mateix esta configurat per a que agafi un fitxer de configuració hardcodejat. Per a que no sigui massa pesat executar les escenes. De totes maneres es podría fer també amb un dialog.
@@ -63,7 +63,7 @@ Podem trobar un exemple de 1. a `basic_spheres.txt` i de 2. a  basic_spheres_tra
 Pel que fa a dades reals, el funcionament segueix el de la practica 1 en els fitxers de configuració. Es pot trobar algun exemple a `basic_data_test.txt`. A les screenshots es poden veure dos exemples amb dades reals.
 
 
-### Comentari addicional:
+#### Comentari addicional:
 S'han adaptat els fitxer d'entrada d'escenes virtual per a poder posar els materials:
 + `brobject ,route ,position ,difuse color`
 + `brobject ,route ,position ,difuse color ,especular color ,ambient color ,shineness`
@@ -71,7 +71,7 @@ S'han adaptat els fitxer d'entrada d'escenes virtual per a poder posar els mater
 Es pot trobar un exemple a `basic_spheres_translated_diffuse.txt`
 
 ##
-#### 2) Material
+### 2) Material
 
 En aquesta segona secció sen’s demana implementar la classe `Material` per a poder fer  el pas de les seves diverses components 
 a la GPU. Per a fer això les modificacions que hem fet ha sigut afegir a la classe `Object` un atribut material, el qual es crearà junt amb els altres atributs d’objecte.
@@ -85,30 +85,46 @@ La component shineness és la única que no és un vector, per tant per a seteja
 
 Els valors de cada component han sigut setejats en el constructor de la classe Material.
 ##
-#### 4) Shading
-Primeramente, nos hemos enfocado en la implementación de las normales en `Object.cpp` mediante la representación de mallas poligonales explícita. Por otro lado, en `GLWidget.cpp`creamos un array denominado `type_shaders`que se encargará de gestionar los distintos tipos de shaders que utilizamos de modo que cada índice del array corresponde a un shader: 0 para el shader en el que plicamos las normales, 1 para Gouraud, 2 para Phong, 3 para Toon, 4 para Phong con textura y 5 para Phong con textura indirecta. Esta correspondencia y su adecuada inicialización en la GPU la hacemos en el método `initShadersGPU` de esta misma clase. 
 
-Inicialmente cuando ejecutamos nuestro programa y abrimos una figura cualquiera por defecto tenemos activada la shader 0 (La visualización de normales), esta acción la determinamos en el método `initializeGL` asignando a la variable program de nuestra GPU la shader 0 y montando la misma. Para cada una de nuestras shaders tenemos su correspondiente método de activación que linkea y monta esta shader y a continuación hace una llamada a `updateShader` para actualizar la GPU.
+### 3) Light
 
-##### Gouraud
-Como esta técnica se encarga de calcular las normales a cada vértice su implementación la llevamos a cabo en el `vertex shader` y en el `fragment shader` nos limitamos a recibir el color obtenido en el `vertex shader` para a continuación devolverlo, pues queremos interpolar el color a nivel de píxel. Para ello en nuestro `vertex shader`calcularemos para cada posible luz la dirección de ésta junto con su correspondiente atenuación y mediante el algoritmo de *Bling Phong* obtendremos el color resultante (según esta luz y los materiales usados) que almacenaremos en la variable local `aux_color` teniendo en cuenta su atenuación.
+En aquest secció hem implementat la classe `light`. Utilitzem dos constructors, un al qual podem canviar tots els parametres i un altre en el qual tenim tots definits menys el de tipus llum. Disposem unicament de os constructors ja que, encara que hi hagin tres tipus de llums, hem optat per definir tots els atributs per a tots els tipus de llums. Aixi tenim una major comoditat a l'hora d'utilitzar els shaders i utilitzar unicament els atributs que necesitàvem per a cada llum.
 
-##### Phong
-Su implementación es análoga a la técnica anterior excepto porque en esta ocasión el código descrito en el apartado anterior lo usaremos en el `fragment shader`ya que ahora interpolaremos las normales a nivel de píxel en lugar de calcularlas para cada vértice.
+Després d'implementar tots els setters i getters hem programat el mètode que envia les llums (els seus atributs) cap a la GPU, tot utilitzant un struct per a la CPU i un altre per a la CPU, per cada llum.
 
-##### Toon (OPCIONAL)
-El método utilizado para esta técnica ha sido la implementación directa en el `fragment shader`, es decir calculamos la intensidad por pixel. Para ello la implementación del `vertex shader` es bastante básica pues solo será necesario escribir la normal y la posición como *outputs* que pasarle al fragment. En el `fragment shader` declaramos una variable local `intensity`que es la que nos ayuda a escoger los *tons* almacenando el coseno del ángulo entre la normal y la dirección de la luz. Para ello aplicaremos la siguiente fórmula ![\Large \cos \alpha = \frac{L\cdot N}{\left \| L \right \|\cdot \left \| N \right \|}](https://latex.codecogs.com/gif.latex?%5Ccos%20%5Calpha%20%3D%20%5Cfrac%7BL%5Ccdot%20N%7D%7B%5Cleft%20%5C%7C%20L%20%5Cright%20%5C%7C%5Ccdot%20%5Cleft%20%5C%7C%20N%20%5Cright%20%5C%7C%7D), en la que teniendo en cuenta que el módulo de la normal y la dirección de la luz serán 1 solo es necesario que normalizemos la luz `L` y la normal `N` y calculemos el producto escalar entre estos dos vectores.
+En `Scene.cpp` implementem també el mètode que envia les llums a la GPU, el qual aprofita el mètode esmentat previament de la classe `Light`. De la mateixa manera tenim el mètode que envia la llum ambient a la GPU. en aquest cas utilitzem una variable uniform i no un struct com abans.
 
-Seguidamente, elegimos los *tons* de manera que asignamos los colores más claros cuando el coseno es mayor de 0.95, es decir cuando la normal y la dirección de la luz están próximas, y los colores más oscurs cuando el coseno es menor de 0.25, normal y dirección de la luz más lejanas entre sí.
+En els "shaders" iterem sobre totes les llums de `Scene` i comprovem a cada iteracció quin tipus de llum és. La llum direccional es caracteritza per no tenir un origen, unicament una direcció. Per tant no hi reflexem ni una posició ni una atenuació; D'altra banda la llum "Spotlight" es caracteritza per formar un con de llum que iluminarà unicament els objectes que es trobin a l'interior d'aquest. Aquestes dues últimes llums, encara que creiem que tenen una implementació correcta, no hem aconseguit que funcionin.
 
-Cabe mencionar que todo este proceso lo repetimos para cada una de las luces que podamos tener por ello usamos un bucle recorriendo nuestro arreglo de luces como en los shaders anteriores. 
+### 4) Shading
+
+Primerament, ens hem enfocat en l'implementació de les normals a `Object.cpp` mitjantçant la representació de malles poligonals explicita. D'altra banda, a `GLWidget.cpp` creem un array anomenat `type_shaders` que s'encarregarà de gestionar els diferents tipus de shaders que utilitzem de manera que cada index de l'array es correspongui a un shader: 0 per al shader en que apliquem les normales, 1 per a Goraud, 2 per a Phong i 3 per a Toon, 4 per a Phong amb textura i 5 per Phong amb textura indirecta. Aquesta correspondència i la seva adequada inicialització a la GPU la fem al mètode `initShadersGPU` d'aquesta mateixa classe.
+
+Inicialment quan executem el programa i obrim una figura qualsevol per defecte, tenim activada la shader 0 (visualització de normals), aquesta acció la determinem en el mètode `initializeGL` asignant a la variable program de la nostra GPU la shader 0 i muntant la mateixa. Per a cadascun dels nostres shaders tenim el seu corresponent mètode d'activació que linkeja i munta aquest shader i a continuació fa una crida a `updateShader` per a actualitzar la GPU.
+
+
+#### Gouraud
+Com aquest técnica s'encarrega de calcular les normals a cada vertex. la seva implementació la duem a terme al `vertex shader` i en el `fragment shader` ens limitem a rebre el color entrat per a continuació retornarlo, al cap i a la fi únicament interpolem el color a nivell de píxel. Per això al nostre `vertex shader` calculem per a cada possible llum la direcció d'aquesta junt amb la seva corresponent atenuació i mitjantçant l'algorisme de *Bling Phong* obtenim el color resultant (segons la llum i els material utilitzats) que guardem a la variable local `aux_color` tenint en compte la seva atenuació.
+
+
+#### Phong
+La seva implementació és semblant a la técnica anterior exceptuant peruqe en aquesta ocasió el codi descrit a l'apartat anterior ho usarem al `fragment shader` ja que ara interpolarem les normals a nivell de píxels en comptes de calcular-les per a cada vèrtex.
+
+
+#### Toon (OPCIONAL)
+El mètode utilitzat per aquesta tècnica ha estat la implementació directa al `fragment shader`, es dir calculem la intensitat per píxel. Per aixo la implementació del `vertex shader` es bastant básica, doncs únicament sera necessari escriure la normal i la posició com *outputs* que pasarli al fragment. En el `fragment shader` declarem una variable local `intensity` que és la que ens ajuda a escollir els *tons* enmagatzemant el cosinus de l'angle entre la normal i la direcció de la llum. Per això apliquem la següent fórmula: ![\Large \cos \alpha = \frac{L\cdot N}{\left \| L \right \|\cdot \left \| N \right \|}](https://latex.codecogs.com/gif.latex?%5Ccos%20%5Calpha%20%3D%20%5Cfrac%7BL%5Ccdot%20N%7D%7B%5Cleft%20%5C%7C%20L%20%5Cright%20%5C%7C%5Ccdot%20%5Cleft%20%5C%7C%20N%20%5Cright%20%5C%7C%7D) , en la que tenint en compte que le módulo de la normal i la direcció de la llum seran un sol es necesari que normalitzem la llum `L` i la normal `N` i calculem el producte escalar entre aquests dos vectors.
+
+Seguidament, escollim els *tons* de manera que asignem els colors més clars quan el cosinus sigui major que 0.95. Es a dir, quan la normal i la direcció de la llum es trobin proximes i els colors més obscurs quan el cosinus és menor que 0.25. (El contrari fenòmen).
+
+Cal mencionar que tot aquest procés el repetim per a cada una de les llums que poguem tenir. Per això utilitzem un bucle recorrent el nostre array de llums al igual que en els shaders anteriors.
+
 ##
 #### 5) Textures  
 
-Per a poder passar les textures a la gpu hem agat d’afegir al buffer espai per a el vector de vertexstexture.
+Per a poder passar les textures a la gpu hem  d’afegir al buffer espai per a el vector de "vertexstexture".
 Com que inicialment només podem aplicar textures als objectes que el seu fitxer obj conté les coordenades de vt hem afegit un if comprobant que el vector on s’ha afegit aquestes coordenades no està buit, així els objectes que no tinguin textures no sel’s intentara aplicar la textura i evitarem errors.
 
-##### Mapeig indirecte (OPCIONAL)
+#### Mapeig indirecte (OPCIONAL)
 
 En aquest apartat hem fet l’opcional de textures indirectes. Per a fer-ho, en els shaders de phong_texture_indirect hem modificat el codi per a que enlloc de passar desde el vshader a fshader les coordenades de textures que s’han enviat desde cpu, fem el càlcul de u,v.
 
@@ -161,20 +177,13 @@ Shineness = 1.0
 
 ### 3) Light
 
-En aquest secció hem implementat la classe `light`. Utilitzem dos constructors, un al qual podem canviar tots els parametres i un altre en el qual tenim tots definits menys el de tipus llum. Disposem unicament de os constructors ja que, encara que hi hagin tres tipus de llums, hem optat per definir tots els atributs per a tots els tipus de llums. Aixi tenim una major comoditat a l'hora d'utilitzar els shaders i utilitzar unicament els atributs que necesitàvem per a cada llum.
-
-Després d'implementar tots els setters i getters hem programat el mètode que envia les llums (els seus atributs) cap a la GPU, tot utilitzant un struct per a la CPU i un altre per a la CPU, per cada llum.
-
-En `Scene.cpp` implementem també el mètode que envia les llums a la GPU, el qual aprofita el mètode esmentat previament de la classe `Light`. De la mateixa manera tenim el mètode que envia la llum ambient a la GPU. en aquest cas utilitzem una variable uniform i no un struct com abans.
-
-En els "shaders" iterem sobre totes les llums de `Scene` i comprovem a cada iteracció quin tipus de llum és. La llum direccional es caracteritza per no tenir un origen, unicament una direcció. Per tant no hi reflexem ni una posició ni una atenuació; D'altra banda la llum "Spotlight" es caracteritza per formar un con de llum que iluminarà unicament els objectes que es trobin a l'interior d'aquest. Aquestes dues últimes llums, encara que creiem que tenen una implementació correcta, no hem aconseguit que funcionin.
 
 La següent imatge mostra dos llums puntuals aplicades a dues esferes:
 
-![Luces](./resources/screenshots/Luces_puntuales_2.PNG)
+![Luces](./resources/screenshots/Luces_puntuales_2.png)
 
 Vemos la aplicación de tres luces puntuales a una esfera:
-![Luces](./resources/screenshots/Luces_puntuales_3.PNG)
+![Luces](./resources/screenshots/Luces_puntuales_3.png)
 
 
 ### 4) Shading
@@ -231,9 +240,7 @@ Dades reals amb un pla amb textura. (Notem que hi ha força Z-fighting)
 
 ![Drag Racing](./resources/screenshots/fitted_plane_texture.png)
 
-*(NOTA: Per a cada pas de l'enunciat (del 1 al 6), incloure captures de pantalla de les proves que heu fet per a demostrar la funcionalitat de la vostra pràctica amb explicacions de la seva configuració i com les heu aconseguides)*
 
-*(NOTA2: Breu explicació, si cal, de com replicar els vostres resultats)*
 
 **Additional Information**
 
