@@ -20,8 +20,8 @@ Aquesta pràctica esta adaptada a partir del codi de la pràctica anterior de Ra
     -  [x] Material | Joan
     - Light
         - [x] Puntual | (Ignacio)
-        - [-] Direccional | (Ignacio)
-        - [-] Spotlight | (Ignacio)
+        - [x] Direccional | (Ignacio)
+        - [x] Spotlight | (Ignacio)
         - [x] Ambient Global | (Ignacio)
     - Shading
         - [x] Phong  |  (Estíbaliz)
@@ -95,7 +95,7 @@ Després d'implementar tots els setters i getters hem programat el mètode que e
 
 En `Scene.cpp` implementem també el mètode que envia les llums a la GPU, el qual aprofita el mètode esmentat previament de la classe `Light`. De la mateixa manera tenim el mètode que envia la llum ambient a la GPU. en aquest cas utilitzem una variable uniform i no un struct com abans.
 
-En els "shaders" iterem sobre totes les llums de `Scene` i comprovem a cada iteracció quin tipus de llum és. La llum direccional es caracteritza per no tenir un origen, unicament una direcció. Per tant no hi reflexem ni una posició ni una atenuació; D'altra banda la llum "Spotlight" es caracteritza per formar un con de llum que iluminarà unicament els objectes que es trobin a l'interior d'aquest. Aquestes dues últimes llums, encara que creiem que tenen una implementació correcta, no hem aconseguit que funcionin.
+En els "shaders" iterem sobre totes les llums de `Scene` i comprovem a cada iteracció quin tipus de llum és. La llum direccional es caracteritza per no tenir un origen, unicament una direcció. Per tant no hi reflexem ni una posició ni una atenuació; D'altra banda la llum "Spotlight" es caracteritza per formar un con de llum que iluminarà unicament els objectes que es trobin a l'interior d'aquest. A estas dos les he incluido un "opcional", earthlight, que permite ver un efecto como el de la Luna al alinearse con la Tierra. Es un efecto que he encontrado probando el Spotlight y me ha parecido curioso dejarlo.
 
 ### 4) Shading
 
