@@ -5,7 +5,8 @@ Segona pràctica de GiVD 2020-21
 
 **Abstract**
 
-Esta práctica está adaptada a partir código de la práctica anterior de Raytracing. Se ha implementado la gestión de materiales, luces, sombras y texturas a diversos tipos de objetos. De este modo se ha comparado los diferentes materiales y sombras para un mismo objeto, visualizado distintas texturas en distintos objetos y aplicado texturas en una shader concreta con una iluminación específica.
+
+Aquesta pràctica esta adaptada a partir del codi de la pràctica anterior de Raytracing. S'ha implementat la gestió de materials, llums, ombres i textures a varis tipus d'objectes. D'aquesta manera s'han comparat diversos material i ombre per a un mateix objecte i aplcat textures en un shader concret amb una iluminació específica.
 
 **Features**
 
