@@ -21,13 +21,7 @@ struct lights_g
 uniform lights_g lights[3];
 
 //struct de la luz ambiente
-struct lightAmbient
-{
-    vec3 lightAmbientGlobal;
-};
-
-//struct de la luz ambiente
-uniform lightAmbient lightAmbientGlobal;
+uniform vec3 ambientGlobal;
 
 //struct del material
 struct Material{

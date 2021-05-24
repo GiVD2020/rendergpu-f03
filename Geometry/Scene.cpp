@@ -107,9 +107,8 @@ void Scene::addLight(shared_ptr<Light> l) {
  */
 void Scene::setAmbientToGPU(shared_ptr<QGLShaderProgram> program){
     // TO DO: A implementar a la fase 1 de la practica 2
-    vec3 lightAmbient;
-    lightAmbient = program->uniformLocation(QString("lightAmbientGlobal[%1]. lightAmbientGlobal"));
-    //glUniform3fv(lightAmbientGlobal,1,lightAmbientGlobal);
+    GLuint lightAmbient = program->uniformLocation(QString("ambientGlobal"));
+    glUniform3fv(lightAmbient,1,lightAmbientGlobal);
 }
 
 

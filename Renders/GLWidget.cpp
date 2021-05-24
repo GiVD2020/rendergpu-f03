@@ -40,9 +40,9 @@ void GLWidget::initializeGL() {
     glEnable(GL_DOUBLE);
 
     initShadersGPU();
-    program = type_shaders[0];
+    program = type_shaders[2];
     //type_shaders[0]->link();
-    type_shaders[0]->bind();
+    type_shaders[2]->bind();
     // Creacio d'una Light per apoder modificar el seus valors amb la interficie
     auto l  = make_shared<Light>(Puntual);
     //auto l1  = make_shared<Light>(Puntual);
