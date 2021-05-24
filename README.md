@@ -86,12 +86,18 @@ La component shineness és la única que no és un vector, per tant per a seteja
 Els valors de cada component han sigut setejats en el constructor de la classe Material.
 ##
 #### 4) Shading
+Primeramente, nos hemos enfocado en la implementación de las normales en `Object.cpp` mediante la represenación de mallas poligonales explícita. Por otro lado, en `GLWidget.cpp`creamos un array denominado `type_shaders`que se encargará de gestionar los distintos tipos de shaders que utilizamos de modo que cada índice del array corresponde a un shader: 0 para el shader en el que plicamos las normales, 1 para Gouraud, 2 para Phong, 3 para Toon, 4 para Phong con textura y 5 para Phong con textura indirecta. Esta correspondencia y su adecuada inicialización en la GPU la hacemos en el método `initShadersGPU` de esta misma clase. 
+
+Inicialmente cuando ejecutamos nuestro programa y abrimos una figura cualquiera por defecto tenemos activada la shader 0 (La visualización de normales), esta acción la determinamos en el método `initializeGL` asignando a la variable program de nuestra GPU la shader 0 y montando la misma. Para cada una de nuestras shaders tenemos su correspondiente método de activación que linkea y monta esta shader y a continuación hace una llamada a `updateShader` para actualizar la GPU.
+
 ##### Gouraud
+Como esta técnica se encarga de calcular las normales a cada vértice su implementación la llevamos a cabo en el `vertex shader` y en el `fragment shader` nos limitamos a recibir el color obtenido en el `vertex shader` para a continuación devolverlo, pues queremos interpolar el color a nivel de píxel. Para ello en nuestro `vertex shader`calcularemos para cada posible luz la dirección de ésta junto con su correspondiente atenuación y mediante el algoritmo de *Bling Phong* obtendremos el color resultante (según esta luz y los materiales usados) que almacenaremos en la variable local `aux_color` teniendo en cuenta su atenuación.
 
 ##### Phong
+Su implementación es análoga a la técnica anterior excepto porque en esta ocasión el código descrito en el apartado anterior lo usaremos en el `fragment shader`ya que ahora interpolaremos las normales a nivel de píxel en lugar de calcularlas para cada vértice.
 
 ##### Toon (OPCIONAL)
-El método utilizado para esta técnica ha sido la implementación directa en el `fragment shader`, es decir calculamos la intensidad por fragmento. Para ello la implementación del `vertex shader` es bastante básica pues solo será necesario escribir la normal y la posición como *outputs* que pasarle al fragment. En el `fragment shader` declaramos una variable local `intensity`que es la que nos ayuda a escoger los *tons* almacenando el coseno del ángulo entre la normal y la dirección de la luz. Para ello aplicaremos la siguiente fórmula ![\Large \cos \alpha = \frac{L\cdot N}{\left \| L \right \|\cdot \left \| N \right \|}](https://latex.codecogs.com/gif.latex?%5Ccos%20%5Calpha%20%3D%20%5Cfrac%7BL%5Ccdot%20N%7D%7B%5Cleft%20%5C%7C%20L%20%5Cright%20%5C%7C%5Ccdot%20%5Cleft%20%5C%7C%20N%20%5Cright%20%5C%7C%7D), en la que teniendo en cuenta que el módulo de la normal y la dirección de la luz serán 1 solo es necesario que normalizemos la luz `L` y la normal `N` y calculemos el producto escalar entre estos dos vectores.
+El método utilizado para esta técnica ha sido la implementación directa en el `fragment shader`, es decir calculamos la intensidad por pixel. Para ello la implementación del `vertex shader` es bastante básica pues solo será necesario escribir la normal y la posición como *outputs* que pasarle al fragment. En el `fragment shader` declaramos una variable local `intensity`que es la que nos ayuda a escoger los *tons* almacenando el coseno del ángulo entre la normal y la dirección de la luz. Para ello aplicaremos la siguiente fórmula ![\Large \cos \alpha = \frac{L\cdot N}{\left \| L \right \|\cdot \left \| N \right \|}](https://latex.codecogs.com/gif.latex?%5Ccos%20%5Calpha%20%3D%20%5Cfrac%7BL%5Ccdot%20N%7D%7B%5Cleft%20%5C%7C%20L%20%5Cright%20%5C%7C%5Ccdot%20%5Cleft%20%5C%7C%20N%20%5Cright%20%5C%7C%7D), en la que teniendo en cuenta que el módulo de la normal y la dirección de la luz serán 1 solo es necesario que normalizemos la luz `L` y la normal `N` y calculemos el producto escalar entre estos dos vectores.
 
 Seguidamente, elegimos los *tons* de manera que asignamos los colores más claros cuando el coseno es mayor de 0.95, es decir cuando la normal y la dirección de la luz están próximas, y los colores más oscurs cuando el coseno es menor de 0.25, normal y dirección de la luz más lejanas entre sí.
 
@@ -164,10 +170,10 @@ En `Scene.cpp` implementamos también el método que envía las luces a la GPU, 
 En los "shaders" iteramos sobre todas las luces de `Scene` y comprobamos en cada iteración qué tipo de luz es. La luz direccional se caracteriza por no tener un origen, únicamente una dirección, por lo que no reflejamos una posición ni una atenuación; mientras que la luz "Spotlight" se caracteriza por formar un cono de luz que iluminará los objetos que se encuentren en su interior. Estas dos últimas luces, aunque creemos que tienen una implementación correcta, no hemos conseguido que funcionen por diversos problemas.
 
 La siguiente imagen muestra dos luces puntuales aplicadas a dos esferas:
-![Luces](./resources/screenshots/Luces_puntuales_2.png)
+![Luces](./resources/screenshots/Luces_puntuales_2.PNG)
 
 Vemos la aplicación de tres luces puntuales a una esfera:
-![Luces](./resources/screenshots/Luces_puntuales_3.png)
+![Luces](./resources/screenshots/Luces_puntuales_3.PNG)
 
 
 ### 4) Shading
