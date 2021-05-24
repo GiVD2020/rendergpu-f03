@@ -102,7 +102,7 @@ Cabe mencionar que todo este proceso lo repetimos para cada una de las luces que
 Per a poder passar les textures a la gpu hem agat d’afegir al buffer espai per a el vector de vertexstexture.
 Com que inicialment només podem aplicar textures als objectes que el seu fitxer obj conté les coordenades de vt hem afegit un if comprobant que el vector on s’ha afegit aquestes coordenades no està buit, així els objectes que no tinguin textures no sel’s intentara aplicar la textura i evitarem errors.
 
-OPCIONAL: Mapeig indirecte
+##### Mapeig indirecte (OPCIONAL)
 
 En aquest apartat hem fet l’opcional de textures indirectes. Per a fer-ho, en els shaders de phong_texture_indirect hem modificat el codi per a que enlloc de passar desde el vshader a fshader les coordenades de textures que s’han enviat desde cpu, fem el càlcul de u,v.
 
