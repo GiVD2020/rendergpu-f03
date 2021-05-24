@@ -161,15 +161,16 @@ Shineness = 1.0
 
 ### 3) Light
 
-En esta sección hemos implementado la clase luces. Utilizamos dos constructores, uno en el que podemos cambiar todos los parámetros y otro en el que tenemos todos definidos menos el tipo de la luz. Tenemos únicamente dos constructores porque, aunque hay tres tipos de luces, hemos optado por definir todos los atributos para todos los tipos de luz, para mayor facilidad al utilizar los shaders, y utilizar únicamente los atributos que necesitáramos para cada luz.
+En aquest secció hem implementat la classe `light`. Utilitzem dos constructors, un al qual podem canviar tots els parametres i un altre en el qual tenim tots definits menys el de tipus llum. Disposem unicament de os constructors ja que, encara que hi hagin tres tipus de llums, hem optat per definir tots els atributs per a tots els tipus de llums. Aixi tenim una major comoditat a l'hora d'utilitzar els shaders i utilitzar unicament els atributs que necesitàvem per a cada llum.
 
-Tras implementar todos los setters y los getters hemos programado el método que manda las luces(sus atributos) a la GPU, utilizando un struct para la CPU y otro para la GPU, para cada luz.
+Després d'implementar tots els setters i getters hem programat el mètode que envia les llums (els seus atributs) cap a la GPU, tot utilitzant un struct per a la CPU i un altre per a la CPU, per cada llum.
 
-En `Scene.cpp` implementamos también el método que envía las luces a la GPU, que aprovecha el método mencionado anteriormente de la clase `Light`. También tenemos el método que manda la luz ambiente a la GPU. En este caso utilizamos una variable uniform y no un struct como anteriormente.
+En `Scene.cpp` implementem també el mètode que envia les llums a la GPU, el qual aprofita el mètode esmentat previament de la classe `Light`. De la mateixa manera tenim el mètode que envia la llum ambient a la GPU. en aquest cas utilitzem una variable uniform i no un struct com abans.
 
-En los "shaders" iteramos sobre todas las luces de `Scene` y comprobamos en cada iteración qué tipo de luz es. La luz direccional se caracteriza por no tener un origen, únicamente una dirección, por lo que no reflejamos una posición ni una atenuación; mientras que la luz "Spotlight" se caracteriza por formar un cono de luz que iluminará los objetos que se encuentren en su interior. Estas dos últimas luces, aunque creemos que tienen una implementación correcta, no hemos conseguido que funcionen por diversos problemas.
+En els "shaders" iterem sobre totes les llums de `Scene` i comprovem a cada iteracció quin tipus de llum és. La llum direccional es caracteritza per no tenir un origen, unicament una direcció. Per tant no hi reflexem ni una posició ni una atenuació; D'altra banda la llum "Spotlight" es caracteritza per formar un con de llum que iluminarà unicament els objectes que es trobin a l'interior d'aquest. Aquestes dues últimes llums, encara que creiem que tenen una implementació correcta, no hem aconseguit que funcionin.
 
-La siguiente imagen muestra dos luces puntuales aplicadas a dos esferas:
+La següent imatge mostra dos llums puntuals aplicades a dues esferes:
+
 ![Luces](./resources/screenshots/Luces_puntuales_2.PNG)
 
 Vemos la aplicación de tres luces puntuales a una esfera:
