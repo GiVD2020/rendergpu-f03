@@ -85,6 +85,18 @@ La component shineness és la única que no és un vector, per tant per a seteja
 
 Els valors de cada component han sigut setejats en el constructor de la classe Material.
 ##
+#### 4) Shading
+##### Gouraud
+
+##### Phong
+
+##### Toon (OPCIONAL)
+El método utilizado para esta técnica ha sido la implementación directa en el `fragment shader`, es decir calculamos la intensidad por fragmento. Para ello la implementación del `vertex shader` es bastante básica pues solo será necesario escribir la normal y la posición como *outputs* que pasarle al fragment. En el `fragment shader` declaramos una variable local `intensity`que es la que nos ayuda a escoger los *tons* almacenando el coseno del ángulo entre la normal y la dirección de la luz. Para ello aplicaremos la siguiente fórmula <a href="https://www.codecogs.com/eqnedit.php?latex=\cos&space;\alpha&space;=&space;\frac{L\cdot&space;N}{\left&space;\|&space;L&space;\right&space;\|\cdot&space;\left&space;\|&space;N&space;\right&space;\|}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\cos&space;\alpha&space;=&space;\frac{L\cdot&space;N}{\left&space;\|&space;L&space;\right&space;\|\cdot&space;\left&space;\|&space;N&space;\right&space;\|}" title="\cos \alpha = \frac{L\cdot N}{\left \| L \right \|\cdot \left \| N \right \|}" /></a> , en la que la teniendo en cuenta que el módulo de la normal y la dirección de la luz serán 1 solo es necesario que normalizemos la luz (`L`) y la normal (`N`) y calculemos el producto escalar entre estos dos vectores.
+
+Seguidamente, elegimos los *tons* de manera que asignamos los colores más claros cuando el coseno es mayor de 0.95, es decir cuando la normal y la dirección de la luz están próximas, y los colores más oscurs cuando el coseno es menor de 0.25, normal y dirección de la luz más lejanas entre sí.
+
+Cabe mencionar que todo este proceso lo repetimos para cada una de las luces que podamos tener por ello usamos un bucle recorriendo nuestro arreglo de luces como en los shaders anteriores. 
+##
 #### 5) Textures  
 
 Per a poder passar les textures a la gpu hem agat d’afegir al buffer espai per a el vector de vertexstexture.
@@ -149,7 +161,7 @@ La següent imatge és la representació de les normales d'una esfera (`sphere0.
 
 ![Normales](./resources/screenshots/normals.PNG)
 
-En totes les imatges d'ombre que es mostren la configuració que s'ha usat és la següent:
+En totes les imatges d'ombra que es mostren la configuració que s'ha usat és la següent:
 - Material: `ambient = (0.2,0.2,0.2)`, `diffuse = (0.8,0.5,0.5)`, `especular = (1.0,1.0,1.0)`, `shineness = 20`.
 - Light: `iD_ = (0.8,0.8,0.8)`, `iS_ = (1,1,1)`, `iA_ = (0.2,0.2,0.2)`, `position_ = (10,10,20,0)`, `coeficients_ = (0,0,1)`
 - Scene: `lightAmbientGlobal = (0.3, 0.3, 0.3)`
