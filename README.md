@@ -19,9 +19,9 @@ Segona pràctica de GiVD 2020-21
     -  [x] Material | Joan
     - Light
         - [x] Puntual | (Ignacio)
-        - [ ] Direccional
-        - [ ] Spotlight
-        - [ ] Ambient Global
+        - [-] Direccional | (Ignacio)
+        - [-] Spotlight | (Ignacio)
+        - [x] Ambient Global | (Ignacio)
     - Shading
         - [x] Phong  |  (Estíbaliz)
         - [x] Gouraud  |  (Estíbaliz)
@@ -162,6 +162,12 @@ Tras implementar todos los setters y los getters hemos programado el método que
 En `Scene.cpp` implementamos también el método que envía las luces a la GPU, que aprovecha el método mencionado anteriormente de la clase `Light`. También tenemos el método que manda la luz ambiente a la GPU. En este caso utilizamos una variable uniform y no un struct como anteriormente.
 
 En los "shaders" iteramos sobre todas las luces de `Scene` y comprobamos en cada iteración qué tipo de luz es. La luz direccional se caracteriza por no tener un origen, únicamente una dirección, por lo que no reflejamos una posición ni una atenuación; mientras que la luz "Spotlight" se caracteriza por formar un cono de luz que iluminará los objetos que se encuentren en su interior. Estas dos últimas luces, aunque creemos que tienen una implementación correcta, no hemos conseguido que funcionen por diversos problemas.
+
+La siguiente imagen muestra dos luces puntuales aplicadas a dos esferas:
+![Luces](./resources/screenshots/Luces_puntuales_2.PNG)
+
+Vemos la aplicación de tres luces puntuales a una esfera:
+![Luces](./resources/screenshots/Luces_puntuales_3.PNG)
 
 
 ### 4) Shading
