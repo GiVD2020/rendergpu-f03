@@ -81,7 +81,7 @@ void main() {
         specular = lights[i].iS_g * material.especular * pow(max(dot(N, H), 0.0), material.shineness);
         ambient = lights[i].iA_g * material.ambient;
         // Add it to the output color with the correspondent attenuation
-        aux_color += (diffuse + specular) / attenuation + ambient;
+        aux_color += (diffuse + specular + ambient) / attenuation;
         //aux_color += diffuse + specular + ambient;
     }
 
