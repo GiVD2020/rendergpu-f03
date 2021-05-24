@@ -166,7 +166,10 @@ void Object::make(){
     };
 
     Index = 0;
-    vector<vec2> coords = coordenades();
+    //DESCOMENTAR AQUESTA LÍNEA PER A FER EL CÀLCUL AMB LA CAPSA I NO AMB LA NORMAL
+    //vector<vec2> coords = coordenades();
+    //MÈTODE PER NORMALS, SI ES VOL FER SERVIR EL DE CAPSA HAUREM DE COMENTAR AQUESTA LÍNEA I USAR LA DE SOBRE
+    vector<vec2> coords = coordenades(normalsVertexs);
     for(unsigned int i=0; i<cares.size(); i++){
         for(unsigned int j=0; j<cares[i].idxVertices.size(); j++){
             points[Index] = vertexs[cares[i].idxVertices[j]];
@@ -381,25 +384,47 @@ void Object::aplicaTG(shared_ptr<TG> tg){
 
 }
 
-
+//Mètode per a calcular la textura, a partir del centre de la capsa de l'objecte i el vertex
 vector<vec2> Object::coordenades(){
     vector<vec2> temporal(vertexs.size());
     float u,v;
     //1. calcula capsa
     Capsa3D capsa = calculCapsa3D();
     //2.posició centre capsa
-    vec3 centre = vec3(capsa.a/2.0, capsa.h/2.0, capsa.p/2.0);
+    vec3 centre = vec3(capsa.a/2.0 +capsa.pmin.x, capsa.h/2.0 + capsa.pmin.y, capsa.p/2.0 + capsa.pmin.z);
+    //vec3 centre = vec3(capsa.a/2.0, capsa.h/2.0, capsa.p/2.0);
     for(int i=0; i<vertexs.size();i++){
         //3.creació vector que va de centre al vertex
         vec3 notNormal = (vertexs[i].x - centre.x, vertexs[i].y - centre.y,vertexs[i].z - centre.z);
         vec3 normal = normalize(notNormal);
         //4. usar les posicions d'aquest vector per calcular u,v
-        u = 0.5 - atan2(notNormal.z,notNormal.x)/(2.0*3.14);
-        v = 0.5 - asin(notNormal.y)/3.14;
-        temporal[i]=vec2(u,v);
+        u = 0.5 - atan2(normal.z,normal.x)/(2.0*3.14);
+        v = 0.5 - asin(normal.y)/3.14;
+        //temporal[i]=vec2(u,v);
+        //temporal.push_back(vec2(u,v));
+        temporal.insert(temporal.begin() + i, vec2(u,v));
     }
     return temporal;
 }
+
+//Mètode vist a classe de teoria per a calcular les coordenades de textura amb el raig normal
+vector<vec2> Object::coordenades(vector<vec4>normalsVertexs){
+    vector<vec2> temporal(vertexs.size());
+    float u,v;
+    for(int i=0; i<vertexs.size();i++){
+        u = 0.5 - atan2(normalsVertexs[i].z,normalsVertexs[i].x)/(2.0*3.14);
+        v = 0.5 - asin(normalsVertexs[i].y)/3.14;
+        vec2 final = vec2(u,v);
+        //temporal.push_back(vec2(u,v));
+        temporal.insert(temporal.begin() + i, final);
+        //temporal[i]=vec2(u,v);
+    }
+    return temporal;
+}
+
+
+
+
 
 
 

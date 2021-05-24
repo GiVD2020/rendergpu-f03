@@ -21,7 +21,7 @@ using namespace Common;
 #include <Geometry/Animation.h>
 #include <Geometry/Cara.h>
 #include <Geometry/Material.h>
-
+#include  "math.h"
 
 typedef vec4  point4;
 
@@ -87,7 +87,11 @@ public:
 
     virtual void aplicaTG(shared_ptr<TG> tg);
 
+    //TEXTURES INDIRECTES PER CAPSA
     vector<vec2> coordenades();
+
+    //TEXTURES INDIRECTES AMB NORMALS
+    vector<vec2> coordenades(vector<vec4> normalsVertexs);
 
 
 
