@@ -112,6 +112,8 @@ En aquesta part hem tingut alguns problemes a l'hora de calcular les coordenades
 
 Per a poder provar els shaders de mapping inderecte hem afegit al menú de textures una nova opció, anomenada PhongTex Indirecte, habilitant aquesta opció podrem provar les textures indirectes.
 
+Si volem provar el mapeig indirecte en objectes sense vèrtexs de textura el que hem de fer és escollir un objecte sense, com ara el sphere o el monkey i seleccionar PhongTex. Ja que com que no tenen vertexs de textura els hi assignarem de la manera indirecta.
+
 ##
 
 ## Screenshots
@@ -207,7 +209,7 @@ La següent imatge es correspon a l'objecte `sphere0.obj` amb els paràmetres us
 ![Drag Racing](./resources/screenshots/sphereIndirecteNormal.png)
 
 
-La següent imatge es correspon a l'objecte `sphere0.obj` sense llums i textura indirecte amb el mètode que usa el centre de la capsa.
+La següent imatge es correspon a l'objecte `sphere0.obj` amb els mateixos paràmetres pero aquest cop usant el mètode del centre de la capsa mínima.
 
 ![Drag Racing](./resources/screenshots/sphereIndirecte.png)
 
