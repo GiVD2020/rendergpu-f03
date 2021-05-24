@@ -95,7 +95,7 @@ Després d'implementar tots els setters i getters hem programat el mètode que e
 
 En `Scene.cpp` implementem també el mètode que envia les llums a la GPU, el qual aprofita el mètode esmentat previament de la classe `Light`. De la mateixa manera tenim el mètode que envia la llum ambient a la GPU. en aquest cas utilitzem una variable uniform i no un struct com abans.
 
-En els "shaders" iterem sobre totes les llums de `Scene` i comprovem a cada iteracció quin tipus de llum és. La llum direccional es caracteritza per no tenir un origen, unicament una direcció. Per tant no hi reflexem ni una posició ni una atenuació; D'altra banda la llum "Spotlight" es caracteritza per formar un con de llum que iluminarà unicament els objectes que es trobin a l'interior d'aquest. A estas dos les he incluido un "opcional", earthlight, que permite ver un efecto como el de la Luna al alinearse con la Tierra. Es un efecto que he encontrado probando el Spotlight y me ha parecido curioso dejarlo. Se puede apre
+En els "shaders" iterem sobre totes les llums de `Scene` i comprovem a cada iteracció quin tipus de llum és. La llum direccional es caracteritza per no tenir un origen, unicament una direcció. Per tant no hi reflexem ni una posició ni una atenuació; D'altra banda la llum "Spotlight" es caracteritza per formar un con de llum que iluminarà unicament els objectes que es trobin a l'interior d'aquest. A estas dos les he incluido un "opcional", earthlight, que permite ver un efecto como el de la Luna al alinearse con la Tierra. Es un efecto que he encontrado probando el Spotlight y me ha parecido curioso dejarlo. Cabe destacar que para la luz spotlight no hmos conseguido quitar una traza de la luz especular, el círculo blanco que se aprecia en la iamgen más abajo.
 
 ### 4) Shading
 
@@ -184,11 +184,15 @@ La següent imatge mostra dos llums puntuals aplicades a dues esferes:
 ![Luces](./resources/screenshots/Luces_puntuales_2.png)
 
 Vemos la aplicación de tres luces puntuales a una esfera:
+
 ![Luces](./resources/screenshots/Luces_puntuales_3.png)
 
 Luz spotlight:
+
 ![Luces](./resources/screenshots/spotlight.png)
+
 Luz cinerea:
+
 ![Luces](./resources/screenshots/Luz_cinerea.png)
 
 
