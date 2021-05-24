@@ -174,36 +174,38 @@ void Light::setLightAngle(float angle) {
 
 void Light::LightsToGPU(QGLShaderProgram *program, int i) {
     //declaramos un vector de identificadores
-    struct lights_Id
-    {
-        GLuint position;
-        GLuint iA;
-        GLuint iD;
-        GLuint iS;
-        GLuint coeficients;
-        GLuint type;
-        GLuint direction;
-        GLuint angle;
-    };
-    lights_Id lights_IdVect[MAX];
+        struct lights_Id
+        {
+            GLuint position;
+            GLuint iA;
+            GLuint iD;
+            GLuint iS;
+            GLuint coeficients;
+            GLuint type;
+            GLuint direction;
+            GLuint angle;
+        };
+        lights_Id lights_IdVect[MAX];
 
-    //obtenemos los identificadores de la GPU
-    lights_IdVect[i].position=program->uniformLocation(QString("lights[%1].position_g").arg( i ));
-    lights_IdVect[i].iA=program->uniformLocation(QString("lights[%1].iA_g").arg( i ));
-    lights_IdVect[i].iD=program->uniformLocation(QString("lights[%1].iD_g").arg( i ));
-    lights_IdVect[i].iS=program->uniformLocation(QString("lights[%1].iS_g").arg( i ));
-    lights_IdVect[i].coeficients=program->uniformLocation(QString("lights[%1].coeficients_g").arg( i ));
-    lights_IdVect[i].type=program->uniformLocation(QString("lights[%1].type_g").arg( i ));
-    lights_IdVect[i].direction=program->uniformLocation(QString("lights[%1].direction_g").arg( i ));
-    lights_IdVect[i].angle=program->uniformLocation(QString("lights[%1].angle_g").arg( i ));
+        //obtenemos los identificadores de la GPU
+        lights_IdVect[i].position=program->uniformLocation(QString("lights[%1].position_g").arg( i ));
+        lights_IdVect[i].iA=program->uniformLocation(QString("lights[%1].iA_g").arg( i ));
+        lights_IdVect[i].iD=program->uniformLocation(QString("lights[%1].iD_g").arg( i ));
+        lights_IdVect[i].iS=program->uniformLocation(QString("lights[%1].iS_g").arg( i ));
+        lights_IdVect[i].coeficients=program->uniformLocation(QString("lights[%1].coeficients_g").arg( i ));
+        lights_IdVect[i].type=program->uniformLocation(QString("lights[%1].type_g").arg( i ));
+        lights_IdVect[i].direction=program->uniformLocation(QString("lights[%1].direction_g").arg( i ));
+        lights_IdVect[i].angle=program->uniformLocation(QString("lights[%1].angle_g").arg( i ));
 
-    //Bind de las zonas de memoria que correspondan
-    glUniform1f(lights_IdVect[i].type,type_);
-    glUniform4fv(lights_IdVect[i].position,1,position_);
-    glUniform3fv(lights_IdVect[i].iA,1,iA_);
-    glUniform3fv(lights_IdVect[i].iD,1,iD_);
-    glUniform3fv(lights_IdVect[i].iS,1,iS_);
-    glUniform3fv(lights_IdVect[i].coeficients,1,coeficients_);
-    glUniform4fv(lights_IdVect[i].direction,1,direction_);
-    glUniform1f(lights_IdVect[i].angle,angle_);
+        //Bind de las zonas de memoria que correspondan
+
+        glUniform1i(lights_IdVect[i].type,type_);
+        glUniform4fv(lights_IdVect[i].position,1,position_);
+        glUniform3fv(lights_IdVect[i].iA,1,iA_);
+        glUniform3fv(lights_IdVect[i].iD,1,iD_);
+        glUniform3fv(lights_IdVect[i].iS,1,iS_);
+        glUniform3fv(lights_IdVect[i].coeficients,1,coeficients_);
+        glUniform4fv(lights_IdVect[i].direction,1,direction_);
+        glUniform1f(lights_IdVect[i].angle,angle_);
+        qDebug() << "Angle" << this -> angle_;
 }

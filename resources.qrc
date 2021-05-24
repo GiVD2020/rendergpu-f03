@@ -22,5 +22,6 @@
         <file>resources/fshader_phong_texture_indirect.glsl</file>
         <file>resources/vshader_phong_texture_indirect.glsl</file>
         <file>resources/fshaderNacho.glsl</file>
+        <file>resources/fshaderNacho_copy.glsl</file>
     </qresource>
 </RCC>
