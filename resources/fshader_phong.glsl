@@ -35,13 +35,15 @@ uniform int numl;
 uniform vec4 obs;
 
 void main() {
-    // Color without alpha component
+
+    // Color sin el componenete de opacidad/transparencia
     vec3 aux_color = material.ambient * ambientGlobal;
 
     vec3 diffuse;
     vec3 specular;
     vec3 ambient;
 
+    //Parametros para Bling Phong analogos a Gouraud
     vec4 N = normalize(normal);
     vec4 V = normalize(obs - position);
     vec4 L;
@@ -50,17 +52,17 @@ void main() {
     float attenuation;
     float distance;
 
-    // Calculate the local color for each light
+    // Calculamos el color (para cada posible tipo de luz)
     for (int i = 0; i < numl; i++) {
 
-        // If the light is Puntual (at the moment we only have Puntual Lights)
+        // Para luz puntual
         if (lights[i].type_g == 0) {
             L = normalize(lights[i].position_g - position);
             distance = length(L);
 
-            // Calculate attenuation
+            // Calculo de la atenuacion
             attenuation = (lights[i].coeficients_g.x * pow(distance, 2.0) + lights[i].coeficients_g.y * distance + lights[i].coeficients_g.z);
-            // Calculate attenuation
+
             if (attenuation <= 1.0) {
                 attenuation = 1.0;
             }
@@ -71,18 +73,19 @@ void main() {
         }
 
 
-        // Calculate Phong direct iluminations
+        // Calculamos Bling Phong
         H = normalize(L + V);
 
         diffuse = lights[i].iD_g * material.diffuse * max(dot(L, N), 0.0);
         specular = lights[i].iS_g * material.especular * pow(max(dot(N, H), 0.0), material.shineness);
         ambient = lights[i].iA_g * material.ambient;
-        // Add it to the output color with the correspondent attenuation
-        aux_color += (diffuse + specular) / attenuation + ambient;
-        //aux_color += diffuse + specular + ambient;
+        // Obtenemos el color resultante al incidir esta luz y teniendo en cuenta la atenuacion
+        aux_color += (diffuse + specular + ambient) / attenuation;
     }
 
     color = vec4(aux_color, material.alpha);
+
+    //TESTS REALIZADOS
 
     //Prueba 1 (verde) PASS
     //color = vec4(material.diffuse,1.0);

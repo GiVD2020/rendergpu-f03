@@ -8,7 +8,7 @@ struct Material {
     vec3 ambient;
     float shineness;
     float alpha;
-};
+}; uniform Material material;
 
 struct lights_g
 {
@@ -20,65 +20,63 @@ struct lights_g
     int type_g;
     vec4 direction_g;
     float angle_g;
-};
-
-uniform Material material;
-uniform lights_g lights[3];
+}; uniform lights_g lights[3];
 
 uniform vec3 ambientGlobal;
-uniform int numl;
-uniform vec4 obs;
+uniform int numl; // Numero de luces disponibles en la escena
+uniform vec4 obs; //Posicion del observador (la obtenemos de la camara)
 
 uniform mat4 model_view;
 uniform mat4 projection;
 
 out vec4 color;
-out vec3 color_aux;
 
 void main() {
     gl_Position = projection*model_view*vPosition;
     gl_Position = gl_Position/gl_Position.w;
 
-    // Color without alpha component
+    // Color sin el componenete de opacidad/transparencia
     vec3 aux_color = material.ambient * ambientGlobal;
 
     vec3 diffuse;
     vec3 specular;
     vec3 ambient;
 
-    vec4 N = normalize(normals);
-    vec4 V= normalize(obs - vPosition);
-    vec4 L;
-    vec4 H;
+    vec4 N = normalize(normals); // Normalizamos la normal
+    vec4 V; // Vector que indica la direccion del observador
+    vec4 L; // Direccion de la luz, la calcularemos mas adelante porque dependera del tipo de luz
+    vec4 H; // Vector que se encuentra entre la dirección de la luz y el observador, lo necesitaremos para la formula de Blinn Phong
 
     float attenuation;
     float distance;
 
-    // Calculate the local color for each light
+    // Calculamos el color local para cada luz
     for (int i = 0; i < numl; i++) {
-        // If the light is Puntual
+        // Luz puntual
         if (lights[i].type_g == 0) {
-            L = normalize(lights[i].position_g - vPosition);
-            //V = normalize(obs - vPosition);
-            //H = normalize(L + V);
-            distance = length(L);
+            L = normalize(lights[i].position_g - vPosition); //Direccion de la luz normalizada
+            distance = length(L); // Distancia a la luz
+            // Atenuacion en profundidad
             attenuation = (lights[i].coeficients_g.x * distance * distance + lights[i].coeficients_g.y * distance + lights[i].coeficients_g.z);
-            //color = vec4(0.0,0.0,1.0,1.0);
 
         }
 
-        V = normalize(obs - vPosition);
+        //Aplicacion del algoritmo de Bling Phong
+
+        V = normalize(obs - vPosition); // Normalizamos la dirección del observador
         H = normalize(L + V);
 
         diffuse = lights[i].iD_g * material.diffuse * max(dot(L, N), 0.0);
         specular = lights[i].iS_g* material.especular * pow(max(dot(N, H), 0.0), material.shineness);
         ambient = lights[i].iA_g * material.ambient;
-        // Add it to the output color with the correspondent attenuation
-        aux_color += (diffuse + specular) / attenuation + ambient;
-        //aux_color += diffuse + specular  + ambient;
+        // Obtenemos el color resultante al incidir esta luz y teniendo en cuenta la atenuacion
+        aux_color += (diffuse + specular + ambient) / attenuation;
+
     }
 
     color = vec4(aux_color,material.alpha);
+
+    //TESTS REALIZADOS
 
     //Prueba 1 (verde) PASS
     //color = vec4(material.diffuse,1.0);
