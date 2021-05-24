@@ -108,7 +108,7 @@ En aquest apartat hem fet l’opcional de textures indirectes. Per a fer-ho, en 
 
 A més tal i com hem explicat anteriorment els objectes que no tenen vt no sel’s pot aplicar textures, el que hem fet és que en la classe objecte, en el mètode make, al assignar els vertexs de la textura, en cas que no s’hagin llegit del fitxers els calcularem manualment amb la fòrmula de mapeig indirecte.
 Així les spheres i alguns altres objectes també podran tenir textures.
-En aquesta part hem tingut alguns problemes i actualment la textura no és mapejada correctament.
+En aquesta part hem tingut alguns problemes a l'hora de calcular les coordenades e textura amb el mètode de la capsa tal i com s'ens demana a l'enunciat. A classe de teoria vam veure que hi ha diferents mètodes per a calcular aquestes coordenades així que hem acabat optant per el mètode que usa les normals dels vèrtexs. En el projecte s'usa el de les normals ja que és el que funciona però en el mètode make de la classe `objecte.cpp` hem deixat comentada la línia que faria que s'uses el mètode de la capsa, així si es vol provar quina imatge observariem es pot fer. Tot i això en l'apartat de screenshots deixarem una on s'observi l'output que obtenim.
 
 Per a poder provar els shaders de mapping inderecte hem afegit al menú de textures una nova opció, anomenada PhongTex Indirecte, habilitant aquesta opció podrem provar les textures indirectes.
 
@@ -202,7 +202,12 @@ La següent imatge són les mateixes dades que l'anterior però aquest cop fent 
 
 ![Drag Racing](./resources/screenshots/capsuleTextIndirecte.png)
 
-La següent imatge es correspon a l'objecte `sphere0.obj` sense llums i amb textura indirecte.
+La següent imatge es correspon a l'objecte `sphere0.obj` amb els paràmetres usats en les altres screenshots i amb mapeig indirecte de textures a partir de la normal dels vèrtexs.
+
+![Drag Racing](./resources/screenshots/sphereIndirecteNormal.png)
+
+
+La següent imatge es correspon a l'objecte `sphere0.obj` sense llums i textura indirecte amb el mètode que usa el centre de la capsa.
 
 ![Drag Racing](./resources/screenshots/sphereIndirecte.png)
 
