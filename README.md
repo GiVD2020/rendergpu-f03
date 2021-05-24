@@ -164,10 +164,10 @@ En `Scene.cpp` implementamos también el método que envía las luces a la GPU, 
 En los "shaders" iteramos sobre todas las luces de `Scene` y comprobamos en cada iteración qué tipo de luz es. La luz direccional se caracteriza por no tener un origen, únicamente una dirección, por lo que no reflejamos una posición ni una atenuación; mientras que la luz "Spotlight" se caracteriza por formar un cono de luz que iluminará los objetos que se encuentren en su interior. Estas dos últimas luces, aunque creemos que tienen una implementación correcta, no hemos conseguido que funcionen por diversos problemas.
 
 La siguiente imagen muestra dos luces puntuales aplicadas a dos esferas:
-![Luces](./resources/screenshots/Luces_puntuales_2.PNG)
+![Luces](./resources/screenshots/Luces_puntuales_2.png)
 
 Vemos la aplicación de tres luces puntuales a una esfera:
-![Luces](./resources/screenshots/Luces_puntuales_3.PNG)
+![Luces](./resources/screenshots/Luces_puntuales_3.png)
 
 
 ### 4) Shading
