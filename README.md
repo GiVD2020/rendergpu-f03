@@ -153,7 +153,13 @@ Shineness = 1.0
 
 ### 3) Light
 
-AÑADIR AQUÍ LAS SCREENSHOTS DE LUZES
+En esta sección hemos implementado la clase luces. Utilizamos dos constructores, uno en el que podemos cambiar todos los parámetros y otro en el que tenemos todos definidos menos el tipo de la luz. Tenemos únicamente dos constructores porque, aunque hay tres tipos de luces, hemos optado por definir todos los atributos para todos los tipos de luz, para mayor facilidad al utilizar los shaders, y utilizar únicamente los atributos que necesitáramos para cada luz.
+
+Tras implementar todos los setters y los getters hemos programado el método que manda las luces(sus atributos) a la GPU, utilizando un struct para la CPU y otro para la GPU, para cada luz.
+
+En `Scene.cpp` implementamos también el método que envía las luces a la GPU, que aprovecha el método mencionado anteriormente de la clase `Light`. También tenemos el método que manda la luz ambiente a la GPU. En este caso utilizamos una variable uniform y no un struct como anteriormente.
+
+En los "shaders" iteramos sobre todas las luces de `Scene` y comprobamos en cada iteración qué tipo de luz es. La luz direccional se caracteriza por no tener un origen, únicamente una dirección, por lo que no reflejamos una posición ni una atenuación; mientras que la luz "Spotlight" se caracteriza por formar un cono de luz que iluminará los objetos que se encuentren en su interior. Estas dos últimas luces, aunque creemos que tienen una implementación correcta, no hemos conseguido que funcionen por diversos problemas.
 
 
 ### 4) Shading
