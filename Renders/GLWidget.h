@@ -52,6 +52,7 @@ public slots:
     void activaBumpMapping();
     void activaEnvMapping();
     void activaTransparency();
+    void activaNacho();
 
     void setRotation(float angle, float x, float y, float z);
     void setTranslation(float x, float y, float z);
@@ -97,7 +98,7 @@ private:
     shared_ptr<QGLShaderProgram> program; // Per ars nomes es té un parell vertex-fragment
                                // Cal guardar-ne més d'un en la primera fase.
 
-    shared_ptr<QGLShaderProgram> type_shaders[6];
+    shared_ptr<QGLShaderProgram> type_shaders[7];
     void initShader(const char* vertexShaderFile, const char* fragmentShaderFile, int type_shader);
     void initShadersGPU();
     void updateShader();

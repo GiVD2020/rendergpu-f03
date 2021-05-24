@@ -45,6 +45,7 @@ void main() {
     vec4 N = normalize(normal);
     vec4 V = normalize(obs - position);
     vec4 L;
+    vec4 L_d;
     vec4 H;
 
     float attenuation;
@@ -54,7 +55,7 @@ void main() {
     for (int i = 0; i < numl; i++) {
 
         // If the light is Puntual (at the moment we only have Puntual Lights)
-        if (lights[i].type_g == 3) {
+        if (lights[i].type_g==0) {
             L = normalize(lights[i].position_g - position);
             distance = length(L);
 
@@ -79,7 +80,7 @@ void main() {
 
         }
         //If the light is Directional
-        else if(lights[i].type_g == 4) {
+        else if(lights[i].type_g==1) {
             L = normalize(lights[i].direction_g);
 
             // Calculate attenuation
@@ -95,16 +96,22 @@ void main() {
             aux_color += (diffuse + specular) / attenuation + ambient;
             //aux_color += diffuse + specular + ambient;
         }
-                //If the light is Spotlight
-        else {
-            L = normalize(-lights[i].direction_g);
-            V = normalize(lights[i].position_g - position);
+        //If the light is Spotlight
+        else{
+
+            L_d = normalize(-lights[i].direction_g);
+            L = normalize(lights[i].position_g - position);
             distance = length(V);
 
-            float theta = dot(L, V);
+            // Calculate Phong direct iluminations
+            H = normalize(L + V);
 
-            if(theta > lights[i].angle_g)//if (cos((10.0/2)(2.03.141592)/360) < theta)//
+
+            float theta = dot(V,L);
+            if(theta > cos(lights[i].angle_g))
             {
+
+
                 // Calculate attenuation
                 attenuation = (lights[i].coeficients_g.x * pow(distance, 2.0) + lights[i].coeficients_g.y * distance + lights[i].coeficients_g.z);
                 // Calculate attenuation
@@ -112,12 +119,14 @@ void main() {
                     attenuation = 1.0;
                 }
                 else {
-                    attenuation = 1.0/attenuation;
+                    attenuation = dot(L_d,L)/attenuation;
                 }
-
 
                 // Calculate Phong direct iluminations
                 H = normalize(L + V);
+
+                vec4 norm = N;
+                vec4 lightDir = normalize(lights[i].position_g- position);
 
                 diffuse = lights[i].iD_g * material.diffuse * max(dot(L, N), 0.0);
                 specular = lights[i].iS_g * material.especular * pow(max(dot(N, H), 0.0), material.shineness);
@@ -128,16 +137,32 @@ void main() {
             } else { // The point is outside the cone of light from the spotlight.
                 aux_color += vec3(0.0); // The light will add no color to the point.
             }
-        }
-        // Calculate Phong direct iluminations
-        H = normalize(L + V);
+        }/*
+        //If we want the "earthlight" effect
+        else {
+                vec4 lightDir = normalize(lights[i].position_g- position);
+                float diff = max(dot(N, lightDir),0.0);
 
-        diffuse = lights[i].iD_g * material.diffuse * max(dot(L, N), 0.0);
-        specular = lights[i].iS_g * material.especular * pow(max(dot(N, H), 0.0), material.shineness);
-        ambient = lights[i].iA_g * material.ambient;
-        // Add it to the output color with the correspondent attenuation
-        aux_color += (diffuse + specular) / attenuation + ambient;
-        //aux_color += diffuse + specular + ambient;
+                diffuse = lights[i].iD_g * material.diffuse * diff;
+                vec4 viewDir = V;
+
+                vec4 reflectDir = reflect(-lightDir,N);
+                float spec = pow(max(dot(viewDir,reflectDir),0.0),material.shineness);
+
+                specular = lights[i].iS_g * material.especular * spec;
+
+                float theta = dot(lightDir, normalize(-lights[i].direction_g));
+                float distance = length(lights[i].position_g-position);
+                float attenuation = (lights[i].coeficients_g.x * pow(distance, 2.0) + lights[i].coeficients_g.y * distance + lights[i].coeficients_g.z);
+                attenuation = 1.0f/attenuation;
+                ambient = lights[i].iA_g * material.ambient;
+                // Add it to the output color with the correspondent attenuation
+                aux_color += (diffuse + specular) * attenuation + ambient;
+                //aux_color += diffuse + specular + ambient;
+
+
+        }*/
+        //}
     }
 
     color = vec4(aux_color, material.alpha);
@@ -154,4 +179,3 @@ void main() {
     //color = vec4(material.alpha,1.0,1.0,1.0);
 
 }
-

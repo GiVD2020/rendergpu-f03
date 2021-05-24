@@ -198,7 +198,7 @@ void Light::LightsToGPU(QGLShaderProgram *program, int i) {
     lights_IdVect[i].angle=program->uniformLocation(QString("lights[%1].angle_g").arg( i ));
 
     //Bind de las zonas de memoria que correspondan
-    glUniform1f(lights_IdVect[i].type,type_);
+    glUniform1i(lights_IdVect[i].type,type_);
     glUniform4fv(lights_IdVect[i].position,1,position_);
     glUniform3fv(lights_IdVect[i].iA,1,iA_);
     glUniform3fv(lights_IdVect[i].iD,1,iD_);
