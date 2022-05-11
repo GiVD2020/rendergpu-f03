@@ -20,6 +20,8 @@ using namespace Common;
 #include <Geometry/TG.h>
 #include <Geometry/Animation.h>
 #include <Geometry/Cara.h>
+#include <Geometry/Material.h>
+
 
 typedef vec4  point4;
 
@@ -32,6 +34,7 @@ protected:
     vector<Cara> cares;
     vector<point4> vertexs;
     vector<point4> normalsVertexs;
+    //Vector pels vèrtexs de textura
     vector<vec2>   textVertexs;
 
     // Estructures per passar a la GPU
@@ -49,12 +52,24 @@ protected:
 
     shared_ptr<QGLShaderProgram> program;
 
+    //Atribut textura
     shared_ptr<QOpenGLTexture> texture;
+    //QOpenGLTexture *texture;
+
+    //vec2 de les coordenades de textura
+    vec2 *textureVertexCoords;
+    //Atribut material, com que és protected no fa falta setter i getter(almenys de moment)
+    Material *material;
+
+
+
 
 public:
 
     Object(const int npoints, QObject *parent = 0);
     Object(const int npoints, QString n);
+    Object(const int npoints, QString n, vec3 difuse);
+    Object(const int npoints, QString n, vec3 difuse, vec3 especular, vec3 ambient, float shineness);
     ~Object();
 
     void parseObjFile(const QString &fileName);
@@ -72,10 +87,12 @@ public:
 
     virtual void aplicaTG(shared_ptr<TG> tg);
 
+    vector<vec2> coordenades();
+
 
 
 private:
-    void initTexture();
+    virtual void initTexture();
 };
 
 

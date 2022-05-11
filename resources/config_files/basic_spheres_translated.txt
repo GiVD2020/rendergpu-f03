@@ -1,0 +1,3 @@
+brobject,://resources/models/sphere0.obj
+brobject,://resources/models/sphere0.obj,2,2,2
+

@@ -1,8 +1,9 @@
+ 
 #include "Geometry/TG.h"
 
 TG::TG()
 {
-// matTG = mat4();
+  matTG = mat4();
 }
 
 TG::~TG()

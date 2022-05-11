@@ -2,5 +2,26 @@
     <qresource prefix="/">
         <file>resources/fshader1.glsl</file>
         <file>resources/vshader1.glsl</file>
+        <file>resources/models/sphere0.obj</file>
+        <file>resources/models/sphere1.obj</file>
+        <file>resources/models/capsule.obj</file>
+        <file>resources/models/cruiser.obj</file>
+        <file>resources/textures/bricks.png</file>
+        <file>resources/textures/2k_venus_surface.jpg</file>
+        <file>resources/textures/2k_earth_daymap.jpg</file>
+        <file>resources/config_files/configMapping.txt</file>
+        <file>resources/config_files/configMappingData.txt</file>
+        <file>resources/fshader_gouraud.glsl</file>
+        <file>resources/fshader_phong.glsl</file>
+        <file>resources/fshader_toon.glsl</file>
+        <file>resources/vshader_gouraud.glsl</file>
+        <file>resources/vshader_phong.glsl</file>
+        <file>resources/vshader_toon.glsl</file>
+        <file>resources/vshader_phong_texture.glsl</file>
+        <file>resources/fshader_phong_texture.glsl</file>
+        <file>resources/fshader_phong_texture_indirect.glsl</file>
+        <file>resources/vshader_phong_texture_indirect.glsl</file>
+        <file>resources/fshaderNacho.glsl</file>
+        <file>resources/fshaderNacho_copy.glsl</file>
     </qresource>
 </RCC>

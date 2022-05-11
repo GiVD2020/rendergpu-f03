@@ -3,6 +3,7 @@
 
 #include "TG.h"
 
+
 class TranslateTG : public TG
 {
 public:

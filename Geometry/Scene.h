@@ -9,10 +9,9 @@
 #include <string>
 #include <stdio.h>
 
-#include <library/vec.h>
 #include <library/Common.h>
 
-
+#include <Geometry/FittedPlane.h>
 #include <Geometry/Object.h>
 #include <Geometry/Light.h>
 #include <Renders/Camera.h>
@@ -29,11 +28,21 @@ public:
 
     vector<shared_ptr<Object>> objects;
     vector<shared_ptr<Light>>  lights;
+    shared_ptr<FittedPlane> ground;
+    bool theres_ground = false;
 
     vec3    lightAmbientGlobal;
     shared_ptr<Camera> camera;
     // Capsa contenedora de l'escena
     Capsa3D capsaMinima;
+
+    typedef enum
+    {
+           VIRTUALWORLD,
+           REALDATA,
+           TEMPORALVW,
+           TEMPORALDATA
+    } DATA_TYPES;
 
     Scene();
     ~Scene();
@@ -44,6 +53,8 @@ public:
     void   setLightActual(shared_ptr<Light> l);
 
     void setCamera(shared_ptr<Camera> c);
+    void setGround(shared_ptr<FittedPlane> g);
+    void unSetGround();
 
     void toGPU(shared_ptr<QGLShaderProgram> p);
     void draw();

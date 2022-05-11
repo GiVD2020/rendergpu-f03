@@ -9,7 +9,7 @@ Scene::Scene() {
     capsaMinima.a = 2;
     capsaMinima.h = 2;
     capsaMinima.p = 2;
-    lightAmbientGlobal = vec3(0.2, 0.2, 0.2);
+    lightAmbientGlobal = vec3(0.3, 0.3, 0.3);
 
 
 }
@@ -35,9 +35,12 @@ void Scene::addObject(shared_ptr<Object> obj) {
  * @brief Scene::toGPU
  */
 void Scene::toGPU(shared_ptr<QGLShaderProgram> p) {
-    for(unsigned int i=0; i < objects.size(); i++){
+    setAmbientToGPU(p);
+    lightsToGPU(p);
+    for(int i=0; i < objects.size(); i++){
         objects.at(i)->toGPU(p);
     }
+
 }
 
 /**
@@ -83,12 +86,19 @@ void Scene::setLightActual(shared_ptr<Light> l){
  * @param program
  */
 void Scene::lightsToGPU(shared_ptr<QGLShaderProgram> program){
-// TO DO: A implementar a la fase 1 de la practica 2
-
-}
+    // TO DO: A implementar a la fase 1 de la practica 2
+        for(int i=0; i < lights.size(); i++){
+            lights.at(i)->LightsToGPU(program.get(), i);
+        }
+        //qDebug() << "Num Lights" << this -> lights.size();
+        GLuint numl;
+        numl = program->uniformLocation(QString("numl"));
+        glUniform1i(numl, this->lights.size());
+    }
 
 void Scene::addLight(shared_ptr<Light> l) {
     lights.push_back(l);
+
 }
 
 /**
@@ -97,7 +107,20 @@ void Scene::addLight(shared_ptr<Light> l) {
  */
 void Scene::setAmbientToGPU(shared_ptr<QGLShaderProgram> program){
     // TO DO: A implementar a la fase 1 de la practica 2
+    GLuint lightAmbient = program->uniformLocation(QString("ambientGlobal"));
+    glUniform3fv(lightAmbient,1,lightAmbientGlobal);
+}
 
+
+void Scene::setGround(shared_ptr<FittedPlane> g){
+    theres_ground = true;
+    this->ground = g;
+
+}
+
+
+void Scene::unSetGround(){
+    theres_ground = false;
 }
 
 /**

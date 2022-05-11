@@ -8,9 +8,12 @@
  */
 Object::Object(int npoints, QObject *parent) : QObject(parent){
     numPoints = npoints;
-    points = new point4[numPoints];
-    normals= new point4[numPoints];
-    colors = new point4[numPoints];
+    points = new point4 [numPoints];
+    normals = new point4 [numPoints];
+    textureVertexCoords = new vec2 [numPoints];
+    material = new Material();
+    texture = nullptr;
+
  }
 
 /**
@@ -19,10 +22,32 @@ Object::Object(int npoints, QObject *parent) : QObject(parent){
  * @param n
  */
 Object::Object(int npoints, QString n) : numPoints(npoints){
-    points = new point4[numPoints];
-    normals= new point4[numPoints];
-    colors = new point4[numPoints];
+    points = new point4 [numPoints];
+    normals= new point4 [numPoints];
+    textureVertexCoords = new vec2 [numPoints];
+    material = new Material();
+    texture = nullptr;
+    parseObjFile(n);
+    make();
+}
 
+Object::Object(const int npoints, QString n, vec3 difuse): numPoints(npoints){
+    points = new point4 [numPoints];
+    normals= new point4 [numPoints];
+    colors = new point4 [numPoints];
+    textureVertexCoords = new vec2 [numPoints];
+    material = new Material(difuse);
+    texture = nullptr;
+    parseObjFile(n);
+    make();
+}
+Object::Object(const int npoints, QString n, vec3 difuse, vec3 especular, vec3 ambient, float shineness): numPoints(npoints){
+    points = new point4 [numPoints];
+    normals= new point4 [numPoints];
+    colors = new point4 [numPoints];
+    textureVertexCoords = new vec2 [numPoints];
+    material = new Material(difuse);
+    texture = nullptr;
     parseObjFile(n);
     make();
 }
@@ -34,7 +59,11 @@ Object::Object(int npoints, QString n) : numPoints(npoints){
 Object::~Object(){
     delete points;
     delete normals;
-    delete colors;
+    delete material;
+    delete textureVertexCoords;
+    //Borrem tots els elements del vector
+    textVertexs.clear();
+    //QGLContext::makeCurrent();
 }
 
 /**
@@ -42,13 +71,17 @@ Object::~Object(){
  * @param pr
  */
 void Object::toGPU(shared_ptr<QGLShaderProgram> pr) {
+
     // TO  DO: A modificar a la fase 1 de la practica 2
 
     qDebug() << "Obj to GPU.....";
 
     program = pr;
-    // Creació d'un vertex array object
 
+    //Activo textura i passo a la GPU
+    texture->bind(0);
+    program->setUniformValue("texMap",0);
+    // Creació d'un vertex array object
     glGenVertexArrays( 1, &vao );
 
     // Creacio i inicialitzacio d'un vertex buffer object (VBO)
@@ -61,9 +94,14 @@ void Object::toGPU(shared_ptr<QGLShaderProgram> pr) {
     // TO  DO: A modificar a la fase 1 de la practica 2
     // Cal passar les normals a la GPU
 
-    glBufferData( GL_ARRAY_BUFFER, sizeof(point4)*Index + sizeof(point4)*Index, NULL, GL_STATIC_DRAW );
+    glBufferData( GL_ARRAY_BUFFER, sizeof(point4)*Index + sizeof(point4)*Index + sizeof(vec2)*Index, NULL, GL_STATIC_DRAW );
     glBufferSubData( GL_ARRAY_BUFFER, 0, sizeof(point4)*Index, points );
-    glBufferSubData( GL_ARRAY_BUFFER, sizeof(point4)*Index, sizeof(point4)*Index, colors );
+    //aquí anirà les normals
+    glBufferSubData( GL_ARRAY_BUFFER, sizeof(point4)*Index, sizeof(point4)*Index, normals );
+    //buffer textura
+    glBufferSubData( GL_ARRAY_BUFFER, sizeof(point4)*Index + sizeof(point4)*Index, sizeof(vec2)*Index, textureVertexCoords);
+    //glBufferSubData( GL_ARRAY_BUFFER, sizeof(points)+sizeof(colors), sizeof(vertexsTextura), vertexsTextura );
+
 
     // set up vertex arrays
     glBindVertexArray( vao );
@@ -72,6 +110,13 @@ void Object::toGPU(shared_ptr<QGLShaderProgram> pr) {
 
     glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 0,  (void*)(sizeof(point4)*Index));
     glEnableVertexAttribArray(1);
+
+    //texture
+    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 0,  (void*)((sizeof(point4)*Index) + sizeof (point4)*Index));
+
+    glEnableVertexAttribArray(2);
+    //passem la textura a GPU
+    toGPUTexture(pr);
 }
 
 
@@ -79,20 +124,29 @@ void Object::toGPU(shared_ptr<QGLShaderProgram> pr) {
  * Pintat en la GPU.
  * @brief Object::draw
  */
+//MIRAR SI ESTÀ BÉ PER LA TEXTURA
 void Object::draw(){
 
+    //dibuixem la textura
+    drawTexture();
+    //material to gpu
+    material->toGPU(program);
     // Aqui s'ha de fer el pas de dades a la GPU per si hi ha més d'un objecte
     // Activació a GL del Vertex Buffer Object
 
     glBindVertexArray( vao );
     glEnableVertexAttribArray(0);
     glEnableVertexAttribArray(1);
+    //textura
+    glEnableVertexAttribArray(2);
 
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
     glDrawArrays( GL_TRIANGLES, 0, Index );
 
     glDisableVertexAttribArray(0);
     glDisableVertexAttribArray(1);
+    //textures
+    glDisableVertexAttribArray(2);
 
 }
 
@@ -112,13 +166,23 @@ void Object::make(){
     };
 
     Index = 0;
+    vector<vec2> coords = coordenades();
     for(unsigned int i=0; i<cares.size(); i++){
         for(unsigned int j=0; j<cares[i].idxVertices.size(); j++){
             points[Index] = vertexs[cares[i].idxVertices[j]];
-            colors[Index] = vec4(base_colors[j%4], 1.0);
+            normals[Index] = normalsVertexs[cares[i].idxNormals[j]];
+            if (!textVertexs.empty()){
+                textureVertexCoords[Index] = textVertexs[cares[i].idxTextures[j]];
+            }
+            //CAS en que l'objecte llegit no té cap vt, és a dir vertex texture
+            //EXERCICI OPCIONAL MAPPING INDIRECTA, TAMBÉ USEM CRIDA INDERECTE EN EL SEU RESPECTIU SHADER
+            else{
+                textureVertexCoords[Index] = coords[cares[i].idxVertices[j]];
+            }
             Index++;
         }
     }
+    initTexture();
 }
 
 
@@ -131,8 +195,14 @@ void Object::make(){
 void Object::toGPUTexture(shared_ptr<QGLShaderProgram> pr) {
     program = pr;
 
-// TO DO: Cal implementar en la fase 1 de la practica 2
-// S'ha d'activar la textura i es passa a la GPU
+    // TO DO: Cal implementar en la fase 1 de la practica 2
+    // S'ha d'activar la textura i es passa a la GPU
+    qDebug() << "toGPUTexture...";
+    //CODI DE CUB.CPP
+    //texture->bind(0);
+    glEnable (GL_DEPTH_TEST );
+    glEnable( GL_TEXTURE_2D );
+
 
 }
 
@@ -145,6 +215,12 @@ void Object::drawTexture(){
 
     // TO DO: Cal implementar en la fase 1 de la practica 2
     // S'ha d'activar la textura i es passa a la GPU
+    //texture->bind(0);
+    if(texture != nullptr){
+        texture->bind(0);
+        //Sets the uniform variable at location in the current context to value.
+        program->setUniformValue("texMap",0);
+    }
 
 }
 
@@ -160,6 +236,20 @@ void Object::initTexture()
     // TO DO: A implementar a la fase 1 de la practica 2
     // Cal inicialitzar la textura de l'objecte: veure l'exemple del CubGPUTextura
     qDebug() << "Initializing textures...";
+
+    // Carregar la textura
+    glActiveTexture(GL_TEXTURE0);
+    //passar el path de la textura que volem usar
+    //QOpenGLTexture *textura = new QOpenGLTexture(QImage("://resources/textures/earth3.png"));
+    //Codi necessari per passar de punter a shared_ptr
+    //shared_ptr<QOpenGLTexture> punter_Texture(textura);
+    //texture =  punter_Texture;
+    texture = make_shared<QOpenGLTexture>(QImage("://resources/textures/2k_earth_daymap.jpg"));
+    texture->setWrapMode(QOpenGLTexture::Repeat);
+    //per tema dels pixels per si ocupen mes o menys
+    texture->setMinificationFilter(QOpenGLTexture::LinearMipMapLinear);
+    texture->setMagnificationFilter(QOpenGLTexture::Linear);
+    texture->bind(0);
 
  }
 
@@ -274,5 +364,42 @@ Capsa3D Object::calculCapsa3D()
 }
 
 void Object::aplicaTG(shared_ptr<TG> tg){
+    //POSSIBLEMENT S'HAURIA DE FER A LA GPU
+    /*for(point4 vertex: vertexs){
+        vec4 nou_vertex = vec4(mvmult(tg->getTG(),vertex));
+        vertex.x = nou_vertex.x;
+        vertex.y = nou_vertex.y;
+        vertex.z = nou_vertex.z;
+
+    }*/
+
+    for(int i= 0; i<vertexs.size(); i++){
+        point4 nou_vertex = tg->getTG()*vertexs[i];
+        vertexs[i] = nou_vertex;
+    }
+    make();
 
 }
+
+
+vector<vec2> Object::coordenades(){
+    vector<vec2> temporal(vertexs.size());
+    float u,v;
+    //1. calcula capsa
+    Capsa3D capsa = calculCapsa3D();
+    //2.posició centre capsa
+    vec3 centre = vec3(capsa.a/2.0, capsa.h/2.0, capsa.p/2.0);
+    for(int i=0; i<vertexs.size();i++){
+        //3.creació vector que va de centre al vertex
+        vec3 notNormal = (vertexs[i].x - centre.x, vertexs[i].y - centre.y,vertexs[i].z - centre.z);
+        vec3 normal = normalize(notNormal);
+        //4. usar les posicions d'aquest vector per calcular u,v
+        u = 0.5 - atan2(notNormal.z,notNormal.x)/(2.0*3.14);
+        v = 0.5 - asin(notNormal.y)/3.14;
+        temporal[i]=vec2(u,v);
+    }
+    return temporal;
+}
+
+
+
